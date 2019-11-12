@@ -4,7 +4,9 @@ The scripts here works with the Hadoop and Spark framework for calculating machi
 # Project dependencies
 Python
 > 3.7.xxx
+
 PySpark
 > 2.4.x
+
 Java SDK
 > 1.8.xxx
