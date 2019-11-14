@@ -29029,18 +29029,6 @@
 	},
 	{
 		"state_abr": "SD",
-		"fips": 46102,
-		"county": "Oglala Lakota[11]",
-		"square_km": "5.430,30",
-		"lat": 43.341937,
-		"lng": -102.55948,
-		"pop_est_2007": "-6969SD",
-		"pop_est_2008": 4693,
-		"pop_est_2009": "Meade",
-		"pop_est_2010": "9.020,54\r"
-	},
-	{
-		"state_abr": "SD",
 		"fips": 46103,
 		"county": "Pennington",
 		"square_km": "7.211,21",
@@ -37450,18 +37438,6 @@
 		"pop_est_2008": 13646,
 		"pop_est_2009": 13930,
 		"pop_est_2010": 14224
-	},
-	{
-		"state_abr": "WY",
-		"fips": 5645,
-		"county": "Weston",
-		"square_km": "6.216,02",
-		"lat": 43.846213,
-		"lng": -104.57002,
-		"pop_est_2007": "-6969WY",
-		"pop_est_2008": 5621,
-		"pop_est_2009": "Laramie",
-		"pop_est_2010": "6.960,75\r"
 	},
 	{
 		"state_abr": "WY",

@@ -5,7 +5,7 @@ The data is taken from [washington post](https://www.kaggle.com/paultimothymoone
 To run page, navigate to terminal and write
 ```
 $ npm install
-$ npx webpack
+$ npm start
 ```
 Navigate to index.html, and you should see something like this
 
