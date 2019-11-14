@@ -22,7 +22,7 @@ function initComponent() {
     ({
       lat: cLocation.lat,
       lng: cLocation.lng,
-      value: cLocation.square_km
+      value: cLocation.pop_est_2007
     })
   )
 
