@@ -10,7 +10,7 @@ let getConfig = () => {
   let cfg = {
     "useLocalExtrema": true,
     valueField: 'value',
-    radius: 40,
+    radius: 80,
     maxOpacity: 1
   }
   return cfg;
@@ -49,10 +49,10 @@ let getHeatMapData = () => {
       heatMapLayer = new HeatmapOverlay(cfg);
       propertyHeatMap = new L.Map('map', {
         center: new L.LatLng(39.099724, -94.578331),
-        zoom: 15,
+        zoom: 5,
         layers: [baseLayer, heatMapLayer]
       })
-      disableMapManipulation()
+      //disableMapManipulation()
       setHeatmapData()
 
     }
@@ -62,7 +62,6 @@ let getHeatMapData = () => {
       propertyHeatMap.touchZoom.disable();
       propertyHeatMap.doubleClickZoom.disable();
       propertyHeatMap.scrollWheelZoom.disable();
-      propertyHeatMap.setZoom(5)
     }
 
     let setHeatmapData = () => {
