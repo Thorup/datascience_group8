@@ -1,0 +1,19 @@
+{
+  "name": "heatmap",
+  "version": "1.0.0",
+  "description": "A tutorial walkthrough of heatmap.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mads Norby",
+  "license": "ISC",
+  "dependencies": {
+    "heatmap.js": "^2.0.5",
+    "leaflet-heatmap": "^1.0.0"
+  },
+  "devDependencies": {
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  }
+}
