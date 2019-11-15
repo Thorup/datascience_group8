@@ -38,17 +38,27 @@ let getHeatMapLayer = (cfg) => {
     return heatMapLayer
 }
 
-const initHeatMap = function() {
+const initHeatMap = function () {
     let cfg = getConfig()
     let baseLayer = getBaseLayer()
     let heatMapLayer = getHeatMapLayer(cfg)
+    let maxBounds = getMaxBounds()
     let propertyHeatMap = new L.Map('map', {
         center: new L.LatLng(39.099724, -94.578331),
-        zoom: 5,
-        layers: [baseLayer, heatMapLayer]
+        zoom: 4,
+        layers: [baseLayer, heatMapLayer],
+        maxBounds: maxBounds
     })
     setHeatmapData(heatMapLayer)
     initToolTip(heatMapLayer)
+}
+
+let getMaxBounds = () => {
+    let maxBounds = L.latLngBounds(
+        L.latLng(5.499550, -167.276413), //Southwest
+        L.latLng(83.162102, -52.233040) //Northeast
+    );
+    return maxBounds;
 }
 
 let setHeatmapData = (heatMapLayer) => {
@@ -82,4 +92,6 @@ let initToolTip = (heatMapLayer) => {
         updateTooltip(x, y, value, tooltip);
     };
 }
-export{initHeatMap}
+export {
+    initHeatMap
+}
