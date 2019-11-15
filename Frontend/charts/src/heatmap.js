@@ -1,5 +1,7 @@
-import h337 from 'heatmap.js'
 import HeatmapOverlay from 'leaflet-heatmap'
+import L from 'leaflet'
+import 'leaflet-css'
+
 let json = require('../data/countylocations.json');
 
 
