@@ -4,14 +4,15 @@
   "description": "A tutorial walkthrough of heatmap.js",
   "private": true,
   "scripts": {
-    "test" :"No test specified",
+    "test": "No test specified",
     "start": "npx webpack"
   },
   "author": "Mads Norby",
   "license": "ISC",
   "dependencies": {
     "heatmap.js": "^2.0.5",
-    "leaflet-heatmap": "^1.0.0"
+    "leaflet-heatmap": "^1.0.0",
+    "vega-lite": "^4.0.0-beta.11"
   },
   "devDependencies": {
     "webpack": "^4.41.2",
