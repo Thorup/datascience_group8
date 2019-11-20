@@ -1,8 +1,8 @@
 import HeatmapOverlay from 'leaflet-heatmap'
 import L from 'leaflet'
 import 'leaflet-css'
-
 let json = require('../data/countylocations.json');
+
 
 
 let getConfig = () => {
@@ -75,7 +75,9 @@ let setHeatmapData = (heatMapLayer) => {
 let updateTooltip = (x, y, value, tooltip) => {
     var transl = 'translate(' + (x + 15) + 'px, ' + (y + 15) + 'px)';
     let valueNode = document.createTextNode(value)
+    tooltip.style.display = 'block';
     tooltip.style.webkitTransform = transl;
+    tooltip.innerHTML = "";
     tooltip.appendChild(valueNode)
 };
 
@@ -90,10 +92,11 @@ let initToolTip = (heatMapLayer) => {
             x: x,
             y: y
         });
-        tooltip.style.display = 'block';
         updateTooltip(x, y, value, tooltip);
     };
 }
+
+
 export {
     initHeatMap
 }
