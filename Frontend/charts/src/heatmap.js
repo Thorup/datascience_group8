@@ -74,12 +74,14 @@ let setHeatmapData = (heatMapLayer) => {
 
 let updateTooltip = (x, y, value, tooltip) => {
     var transl = 'translate(' + (x + 15) + 'px, ' + (y + 15) + 'px)';
+    let valueNode = document.createTextNode(value)
     tooltip.style.webkitTransform = transl;
-    tooltip.innerHTML = value;
+    tooltip.appendChild(valueNode)
 };
 
 let initToolTip = (heatMapLayer) => {
     let tooltip = document.querySelector('.tooltip');
+    console.log(tooltip)
     let mapContainer = document.querySelector('.map-container');
     mapContainer.onmousemove = function (ev) {
         let x = ev.layerX;
