@@ -3,8 +3,8 @@ body {
 }
 
 #github-link-logo {
-    width: 100px;
-    height: 100px;
+    width: 75px;
+    height: 75px;
     position: fixed;
     right: 20px;
     top: 10px;
@@ -148,7 +148,6 @@ body::-webkit-scrollbar {
     color: white;
     padding: 1%;
     width: 100%;
-    min-height: 150px;
     background-color: #283655;
     text-align: center;
     top: 0px;
