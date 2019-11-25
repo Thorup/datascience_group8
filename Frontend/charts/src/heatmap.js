@@ -2,8 +2,19 @@ import HeatmapOverlay from 'leaflet-heatmap'
 import L from 'leaflet'
 import 'leaflet-css'
 let json = require('../data/countylocations.json');
+let enableInteraction = false;
 
 
+let initButtonListeners = () => {
+    initPlayBtnListener()
+}
+
+let initPlayBtnListener = () => {
+    let playBtn = document.getElementById('btnPlay')
+    playBtn.addEventListener('click', function () {
+        console.log("Play heatmap")
+    })
+}
 
 let getConfig = () => {
     let cfg = {
@@ -39,19 +50,30 @@ let getHeatMapLayer = (cfg) => {
 }
 
 const initHeatMap = function () {
+    initButtonListeners()
     let cfg = getConfig()
     let baseLayer = getBaseLayer()
     let heatMapLayer = getHeatMapLayer(cfg)
     let maxBounds = getMaxBounds()
-    let propertyHeatMap = new L.Map('map', {
+    let propertyHeatMap = new L.Map('heat-map', {
         center: new L.LatLng(39.099724, -94.578331),
-        zoom: 4,
+        zoom: 5,
         layers: [baseLayer, heatMapLayer],
-        maxBounds: maxBounds
+        maxBounds: maxBounds,
+        dragging: enableInteraction,
+        touchZoom: enableInteraction,
+        scrollWheelZoom: enableInteraction,
+        keyboard: enableInteraction,
+        boxZoom: enableInteraction,
+        doubleClickZoom: enableInteraction,
+        zoomControl: enableInteraction
     })
-    setHeatmapData(heatMapLayer)
+    let year = 2007
+    setHeatmapData(heatMapLayer, year)
     initToolTip(heatMapLayer)
 }
+
+
 
 let getMaxBounds = () => {
     let maxBounds = L.latLngBounds(
@@ -61,7 +83,7 @@ let getMaxBounds = () => {
     return maxBounds;
 }
 
-let setHeatmapData = (heatMapLayer) => {
+let setHeatmapData = (heatMapLayer, year) => {
     let heatMapData = getHeatMapData()
     let min = Math.min(...heatMapData.map(location => location.value))
     let max = Math.max(...heatMapData.map(location => location.value))
@@ -74,17 +96,20 @@ let setHeatmapData = (heatMapLayer) => {
 
 let updateTooltip = (x, y, value, tooltip) => {
     var transl = 'translate(' + (x + 15) + 'px, ' + (y + 15) + 'px)';
-    let valueNode = document.createTextNode(value)
+    let valueNode = document.createTextNode("Population: " + value)
     tooltip.style.display = 'block';
     tooltip.style.webkitTransform = transl;
     tooltip.innerHTML = "";
-    tooltip.appendChild(valueNode)
+    if (value > 0) {
+        tooltip.appendChild(valueNode)
+    } else {
+        tooltip.style.display = 'none';
+    }
 };
 
 let initToolTip = (heatMapLayer) => {
     let tooltip = document.querySelector('.tooltip');
-    console.log(tooltip)
-    let mapContainer = document.querySelector('.map-container');
+    let mapContainer = document.querySelector('#heat-map-container');
     mapContainer.onmousemove = function (ev) {
         let x = ev.layerX;
         let y = ev.layerY;
