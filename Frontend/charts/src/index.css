@@ -24,7 +24,9 @@ body {
 section {
     padding: 60px 0;
 }
-
+.container {
+    text-align: center;
+}
 
 section .section-title {
     text-align: center;
