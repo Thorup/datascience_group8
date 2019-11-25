@@ -2,6 +2,21 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+#github-link-logo {
+    width: 100px;
+    height: 100px;
+    position: fixed;
+    right: 20px;
+    top: 10px;
+    transition: .4s ease-in-out;
+}
+
+
+#github-link-logo:hover {
+    transform: scale(1.1)
+}
+
+
 
 
 /* Footer */
@@ -21,8 +36,9 @@ section .section-title {
     text-transform: uppercase;
 }
 #footer {
+    color: #ffffff;
     margin-top: 5%;
-    background: #007b5e !important;
+    background: #283655  !important;
 }
 #footer h5{
 	padding-left: 10px;
@@ -128,12 +144,11 @@ body::-webkit-scrollbar {
 }
 
 .header {
-    border-bottom: 6px solid darkgreen;
     position: fixed;
     color: white;
     padding: 1%;
     width: 100%;
-    background-color: #007b5e;
+    background-color: #283655;
     text-align: center;
     top: 0px;
     font-weight: bolder;
@@ -161,16 +176,22 @@ body::-webkit-scrollbar {
 }
 
 #btnPlay {
+    padding: 1%;
+    padding-left: 2%;
+    padding-right: 2%;
+    border-radius: 5px;
     border: none;
     z-index: 10;
-    bottom: 50%;
-    left: 50%;
+    bottom: 48%;
+    left: 48%;
     position: absolute;
-    background-color: seagreen;
+    background-color: #283655;
     color: white;
+    transition: 0.3s;
 }
 
 #btnPlay:hover {
+    transform: scale(1.2);
     cursor: pointer;
 }
 
