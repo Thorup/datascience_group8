@@ -156,6 +156,7 @@ body::-webkit-scrollbar {
 }
 
 .map-information {
+    font-size: 1vw;
     display: inline-block;
     margin: 0px;
     padding: 2%;
