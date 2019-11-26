@@ -95,9 +95,7 @@ body::-webkit-scrollbar {
     padding: 5px 8px 5px 8px;
 }
 
-#maps-charts-container {
-    text-align: center;
-}
+
 
 .map-information {
     text-align: center;
