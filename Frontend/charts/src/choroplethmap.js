@@ -1,5 +1,8 @@
 import L from 'leaflet'
 import 'leaflet-css'
+let json = require('../data/countylocations.json');
+let statesData = require('../data/states-data.json');
+
 let enableInteraction = false;
 
 let getBaseLayer = () => {
@@ -21,6 +24,34 @@ let getMaxBounds = () => {
     return maxBounds;
 }
 
+let createStateDataWithOpioidData = () => {
+    //TODO: statesData.density should be replaced with the opioidFactor in that state
+    //when the data is available
+    return statesData;
+}
+
+let getColor = (d) => {
+    return d > 1000 ? '#800026' :
+           d > 500  ? '#BD0026' :
+           d > 200  ? '#E31A1C' :
+           d > 100  ? '#FC4E2A' :
+           d > 50   ? '#FD8D3C' :
+           d > 20   ? '#FEB24C' :
+           d > 10   ? '#FED976' :
+                      '#FFEDA0';
+}
+
+let style =(feature) => {
+    return {
+        fillColor: getColor(feature.properties.density),
+        weight: 2,
+        opacity: 1,
+        color: 'white',
+        dashArray: '3',
+        fillOpacity: 0.7
+    };
+}
+
 
 let initChoroMap = () => {
     let maxBounds = getMaxBounds()
@@ -39,6 +70,9 @@ let initChoroMap = () => {
         zoomControl: enableInteraction,
         attributionControl: false
     })
+
+    let choroOpioidData = createStateDataWithOpioidData();
+    L.geoJson(choroOpioidData, {style: style}).addTo(map);
     
 }
 
