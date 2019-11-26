@@ -38,7 +38,7 @@ body::-webkit-scrollbar {
     height: 75px;
     position: fixed;
     right: 20px;
-    top: 10px;
+    top: 20px;
     transition: .4s ease-in-out;
 }
 
