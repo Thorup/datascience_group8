@@ -5,16 +5,47 @@ let json = require('../data/countylocations.json');
 let enableInteraction = false;
 
 
-let initButtonListeners = () => {
-    initPlayBtnListener()
+
+let initButtonListeners = (heatMapLayer) => {
+    initPlayBtnListener(heatMapLayer)
 }
 
-let initPlayBtnListener = () => {
+let initPlayBtnListener = (heatMapLayer) => {
     let playBtn = document.getElementById('btnPlay')
     playBtn.addEventListener('click', function () {
-        console.log("Play heatmap")
+        playHeatMap(heatMapLayer)
     })
 }
+
+let initStopBtnListener = (playIntervalID) => {
+    let stopBtn = document.getElementById('btnStop')
+    let startBtn = document.getElementById('btnPlay')
+    stopBtn.addEventListener('click', function() {
+        clearInterval(playIntervalID)
+        stopBtn.style.display = 'none';
+        startBtn.style.display = 'block'
+    })
+}
+
+let playHeatMap = (heatMapLayer) => {
+    let years = ["2007", "2008", "2009", "2010"]
+    let playBtn = document.getElementById('btnPlay')
+    let stopBtn = document.getElementById('btnStop')
+    stopBtn.style.display = "block";
+    playBtn.style.display = "none";
+
+    let index = 0;
+    let playIntervalID = setInterval(function(){
+        if(index == (years.length)) {
+            index = 0;
+        }
+        setHeatmapData(heatMapLayer, years[index])
+        index++;
+    }, 2000)
+    initStopBtnListener(playIntervalID)
+}
+
+
 
 let getConfig = () => {
     let cfg = {
@@ -25,6 +56,8 @@ let getConfig = () => {
     }
     return cfg;
 }
+
+
 let getBaseLayer = () => {
     let baseLayer = L.tileLayer(
         'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -34,13 +67,47 @@ let getBaseLayer = () => {
     return baseLayer;
 }
 
-let getHeatMapData = () => {
-    let heatMapData = json.map(cLocation =>
+let getHeatMapData = (year) => {
+
+
+    let heatMapData = []
+    json.forEach(cLocation => {
+        if(year == 2007) {
+            heatMapData.push({
+                lat: cLocation.lat,
+                lng: cLocation.lng,
+                value: cLocation.pop_est_2007
+            })
+        } else  if(year == 2008) {
+            heatMapData.push({
+                lat: cLocation.lat,
+                lng: cLocation.lng,
+                value: cLocation.pop_est_2008
+            })
+        } else if(year == 2009) {
+            heatMapData.push({
+                lat: cLocation.lat,
+                lng: cLocation.lng,
+                value: cLocation.pop_est_2009
+            })
+        } else  if(year == 2010) {
+            heatMapData.push({
+                lat: cLocation.lat,
+                lng: cLocation.lng,
+                value: cLocation.pop_est_2010
+            })
+        }
+    })
+
+/*
+    //TODO: MAKE THE POP_EST DYNAMIC SO IT TAKES THE YEAR VARIABLE AND APPENDS TO POPEST
+    let heatMapData =json.map(cLocation =>
         ({
             lat: cLocation.lat,
             lng: cLocation.lng,
             value: cLocation.pop_est_2007
         }))
+        */
     return heatMapData;
 }
 
@@ -50,12 +117,20 @@ let getHeatMapLayer = (cfg) => {
 }
 
 const initHeatMap = function () {
-    initButtonListeners()
     let cfg = getConfig()
     let baseLayer = getBaseLayer()
     let heatMapLayer = getHeatMapLayer(cfg)
     let maxBounds = getMaxBounds()
-    let propertyHeatMap = new L.Map('heat-map', {
+    let initYear = 2007
+    createHeatMap(baseLayer, heatMapLayer, maxBounds)
+    setHeatmapData(heatMapLayer, initYear)
+    initToolTip(heatMapLayer)
+    initButtonListeners(heatMapLayer)
+    
+}
+
+let createHeatMap = (baseLayer, heatMapLayer, maxBounds) => {
+    let heatMap = new L.Map('heat-map', {
         center: new L.LatLng(39.099724, -94.578331),
         zoom: 5,
         layers: [baseLayer, heatMapLayer],
@@ -68,9 +143,7 @@ const initHeatMap = function () {
         doubleClickZoom: enableInteraction,
         zoomControl: enableInteraction
     })
-    let year = 2007
-    setHeatmapData(heatMapLayer, year)
-    initToolTip(heatMapLayer)
+    return heatMap
 }
 
 
@@ -84,7 +157,10 @@ let getMaxBounds = () => {
 }
 
 let setHeatmapData = (heatMapLayer, year) => {
-    let heatMapData = getHeatMapData()
+
+console.log(heatMapLayer)
+
+    let heatMapData = getHeatMapData(year)
     let min = Math.min(...heatMapData.map(location => location.value))
     let max = Math.max(...heatMapData.map(location => location.value))
     heatMapLayer.setData({

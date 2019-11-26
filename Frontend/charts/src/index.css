@@ -176,30 +176,41 @@ body::-webkit-scrollbar {
 }
 
 #btnPlay {
+    bottom: 48%;
+    left: 48%;  
+}
+
+#btnStop {
+    bottom: 0;
+    right: 0;  
+    display: none;
+}
+
+
+.map-button {
+    position: absolute;
+    background-color: #283655;
+    color: white;
+    transition: 0.3s;
     padding: 1%;
     padding-left: 2%;
     padding-right: 2%;
     border-radius: 5px;
     border: none;
     z-index: 10;
-    bottom: 48%;
-    left: 48%;
-    position: absolute;
-    background-color: #283655;
-    color: white;
-    transition: 0.3s;
 }
 
-#btnPlay:hover {
+.map-button:hover {
     transform: scale(1.2);
     cursor: pointer;
 }
 
-#btnPlay:focus {
+.map-button:focus {
     outline: none;
 }
 
-#btnPlay:active {
+.map-button:active {
     color: black;
     background-color: green;
 }
+

@@ -9,3 +9,7 @@ barcharts.initBarCharts()
 heatmap.initHeatMap()
 choroplethmap.initChoroMap()
 scatterMatrix.initScatterMatrix()
+
+
+
+
