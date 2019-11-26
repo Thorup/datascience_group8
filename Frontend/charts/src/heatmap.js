@@ -124,9 +124,6 @@ let getMaxBounds = () => {
 }
 
 let setHeatmapData = (heatMapLayer, year) => {
-
-    console.log(heatMapLayer)
-
     let heatMapData = getHeatMapData(year)
     let min = Math.min(...heatMapData.map(location => location.value))
     let max = Math.max(...heatMapData.map(location => location.value))
@@ -153,15 +150,17 @@ let updateTooltip = (x, y, value, tooltip) => {
 let initToolTip = (heatMapLayer) => {
     let tooltip = document.querySelector('.tooltip');
     let mapContainer = document.querySelector('#heat-map-container');
-    mapContainer.onmousemove = function (ev) {
-        let x = ev.layerX;
-        let y = ev.layerY;
-        let value = heatMapLayer._heatmap.getValueAt({
-            x: x,
-            y: y
-        });
-        updateTooltip(x, y, value, tooltip);
-    };
+    if (tooltip != null) {
+        mapContainer.onmousemove = function (ev) {
+            let x = ev.layerX;
+            let y = ev.layerY;
+            let value = heatMapLayer._heatmap.getValueAt({
+                x: x,
+                y: y
+            });
+            updateTooltip(x, y, value, tooltip);
+        };
+    }
 }
 
 

@@ -13,8 +13,8 @@ let initScatterMatrix = () => {
             column: ["avgInc", "homelessPercent", "crimePercent", "unemployedPercent"]
         },
         spec: {
-            width: 300,
-            height: 300,
+            width: 200,
+            height: 200,
             data: {
                 url: "../data/data.json"
             },
