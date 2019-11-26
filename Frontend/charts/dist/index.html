@@ -15,7 +15,8 @@
 <body>
     <div class="header">
         <h1>Opioid Use In The U.S.</h1>
-        <a href="https://github.com/Thorup/datascience_group8" target="_blank"><img id="github-link-logo" src="../src/resources/github.png"/></a>
+        <a href="https://github.com/Thorup/datascience_group8" target="_blank"><img id="github-link-logo"
+                src="../src/resources/github.png" /></a>
     </div>
 
     <div class="main-content">
@@ -23,12 +24,10 @@
             <div class="map-play-wrapper">
                 <div class='tooltip'></div>
                 <div class="map" id="heat-map" style="width:100vh; height: 50vh;"></div>
-                <button class="map-button" id="btnPlay"><i
-                        class="material-icons md-36">
+                <button class="map-button btnPlay" id="btnPlayHeatMap"><i class="material-icons md-36">
                         play_arrow
                     </i></button>
-                    <button class="map-button" id="btnStop"><i
-                        class="material-icons md-36">
+                <button class="map-button btnStop" id="btnStopHeatMap"><i class="material-icons md-36">
                         stop
                     </i></button>
             </div>
@@ -40,8 +39,14 @@
 
 
         <div class="map-container container-fluid" id="choro-container">
-
-            <div class="map" id='choro-map' style="width:100vh; height: 50vh;">
+            <div class="map-play-wrapper">
+                <div class="map" id='choro-map' style="width:100vh; height: 50vh;"></div>
+                <button class="map-button btnPlay" id="btnPlayChoroMap"><i class="material-icons md-36">
+                        play_arrow
+                    </i></button>
+                <button class="map-button btnStop" id="btnStopChoroMap"><i class="material-icons md-36">
+                        stop
+                    </i></button>
             </div>
 
             <div class="map-information">Some random info - Some random info - Some random info - Some random info -
@@ -59,24 +64,34 @@
                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                     <h5>Contributors</h5>
                     <ul class="list-unstyled quick-links">
-                        <li><a href="https://github.com/Thorup" target="_blank"><i class="fa fa-angle-double-right"></i>Alexander Thorup</a></li>
-                        <li><a href="javascript:void();" target="_blank"><i class="fa fa-angle-double-right"></i>Jens Navne</a></li>
-                        <li><a href="https://github.com/lhunniche" target="_blank"><i class="fa fa-angle-double-right"></i>Lasse Klevang</a></li>
-                        <li><a href="https://github.com/FCBfreak" target="_blank"><i class="fa fa-angle-double-right"></i>Johan Jakobsen</a></li>
-                        <li><a href="https://github.com/Xrosby" target="_blank"><i class="fa fa-angle-double-right"></i>Mads Norby</a></li>
+                        <li><a href="https://github.com/Thorup" target="_blank"><i
+                                    class="fa fa-angle-double-right"></i>Alexander Thorup</a></li>
+                        <li><a href="javascript:void();" target="_blank"><i class="fa fa-angle-double-right"></i>Jens
+                                Navne</a></li>
+                        <li><a href="https://github.com/lhunniche" target="_blank"><i
+                                    class="fa fa-angle-double-right"></i>Lasse Klevang</a></li>
+                        <li><a href="https://github.com/FCBfreak" target="_blank"><i
+                                    class="fa fa-angle-double-right"></i>Johan Jakobsen</a></li>
+                        <li><a href="https://github.com/Xrosby" target="_blank"><i
+                                    class="fa fa-angle-double-right"></i>Mads Norby</a></li>
                     </ul>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                     <h5>Project links</h5>
                     <ul class="list-unstyled quick-links">
-                        <li><a href="https://github.com/Thorup/datascience_group8" target="_blank"><i class="fa fa-angle-double-right"></i>Project GitHub</a></li>
-                        <li><a href="https://pdfhost.io/v/AlUJPYtm_outputpdf.pdf" target="_blank"><i class="fa fa-angle-double-right"></i>Project Documentation</a></li>
-                        <li><a href="https://www.kaggle.com/paultimothymooney/pain-pills-in-the-usa?fbclid=IwAR20v_OL3gkUuTWlGex-xMyWcOplxYciJ_tXO4_wX4kZVUI-VjRi4WZLbE8" target="_blank"><i class="fa fa-angle-double-right"></i>Opioid Data Source</a></li>
-                        <li><a href="" id="data-sources-link" target="_blank"  data-toggle="modal" data-target="#exampleModalCentered"><i class="fa fa-angle-double-right"></i>Other Data Sources</a></li>
+                        <li><a href="https://github.com/Thorup/datascience_group8" target="_blank"><i
+                                    class="fa fa-angle-double-right"></i>Project GitHub</a></li>
+                        <li><a href="https://pdfhost.io/v/AlUJPYtm_outputpdf.pdf" target="_blank"><i
+                                    class="fa fa-angle-double-right"></i>Project Documentation</a></li>
+                        <li><a href="https://www.kaggle.com/paultimothymooney/pain-pills-in-the-usa?fbclid=IwAR20v_OL3gkUuTWlGex-xMyWcOplxYciJ_tXO4_wX4kZVUI-VjRi4WZLbE8"
+                                target="_blank"><i class="fa fa-angle-double-right"></i>Opioid Data Source</a></li>
+                        <li><a href="" id="data-sources-link" target="_blank" data-toggle="modal"
+                                data-target="#exampleModalCentered"><i class="fa fa-angle-double-right"></i>Other Data
+                                Sources</a></li>
                     </ul>
                 </div>
-                
-            
+
+
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 mt-12 mt-sm-12 text-center text-white">
@@ -87,32 +102,37 @@
         </div>
     </section>
 
-    <div class="modal" id="exampleModalCentered" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredLabel" aria-hidden="true">
+    <div class="modal" id="exampleModalCentered" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredLabel"
+        aria-hidden="true">
 
 
         <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalCenteredLabel">Other Data Sources</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenteredLabel">Other Data Sources</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        <li><a href="https://www.hudexchange.info/resource/3031/pit-and-hic-data-since-2007/"
+                                target="_blank">Homeless Data</a></li>
+                        <li><a href="https://www.bls.gov/bls/news-release/laus.htm" target="_blank">Unemployment
+                                Data</a></li>
+                        <li><a href="https://fred.stlouisfed.org/release?rid=118" target="_blank">Population Data</a>
+                        </li>
+                        <li><a href="https://ucr.fbi.gov/crime-in-the-u.s" target="_blank">Crime Data</a></li>
+                        <li><a href="https://www2.census.gov/programs-surveys/cps/techdocs/cpsmar19.pdf"
+                                target="_blank">Average Income Data</a></li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
-            <div class="modal-body">
-                <ul>
-              <li><a href="https://www.hudexchange.info/resource/3031/pit-and-hic-data-since-2007/" target="_blank">Homeless Data</a></li>
-              <li><a href="https://www.bls.gov/bls/news-release/laus.htm" target="_blank">Unemployment Data</a></li>
-              <li><a href="https://fred.stlouisfed.org/release?rid=118" target="_blank">Population Data</a></li>
-              <li><a href="https://ucr.fbi.gov/crime-in-the-u.s" target="_blank">Crime Data</a></li>
-              <li><a href="https://www2.census.gov/programs-surveys/cps/techdocs/cpsmar19.pdf" target="_blank">Average Income Data</a></li>
-            </ul>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-          </div>
         </div>
-      </div>
+    </div>
     <!-- ./Footer -->
     <script src="main.js"></script>
 </body>

@@ -175,12 +175,12 @@ body::-webkit-scrollbar {
     position: relative;
 }
 
-#btnPlay {
+.btnPlay {
     bottom: 48%;
     left: 48%;  
 }
 
-#btnStop {
+.btnStop {
     bottom: 0;
     right: 0;  
     display: none;

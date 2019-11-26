@@ -4,23 +4,21 @@ import 'leaflet-css'
 let json = require('../data/countylocations.json');
 let enableInteraction = false;
 
-
-
 let initButtonListeners = (heatMapLayer) => {
     initPlayBtnListener(heatMapLayer)
 }
 
 let initPlayBtnListener = (heatMapLayer) => {
-    let playBtn = document.getElementById('btnPlay')
+    let playBtn = document.getElementById('btnPlayHeatMap')
     playBtn.addEventListener('click', function () {
         playHeatMap(heatMapLayer)
     })
 }
 
 let initStopBtnListener = (playIntervalID) => {
-    let stopBtn = document.getElementById('btnStop')
-    let startBtn = document.getElementById('btnPlay')
-    stopBtn.addEventListener('click', function() {
+    let stopBtn = document.getElementById('btnStopHeatMap')
+    let startBtn = document.getElementById('btnPlayHeatMap')
+    stopBtn.addEventListener('click', function () {
         clearInterval(playIntervalID)
         stopBtn.style.display = 'none';
         startBtn.style.display = 'block'
@@ -29,14 +27,14 @@ let initStopBtnListener = (playIntervalID) => {
 
 let playHeatMap = (heatMapLayer) => {
     let years = ["2007", "2008", "2009", "2010"]
-    let playBtn = document.getElementById('btnPlay')
-    let stopBtn = document.getElementById('btnStop')
+    let playBtn = document.getElementById('btnPlayHeatMap')
+    let stopBtn = document.getElementById('btnStopHeatMap')
     stopBtn.style.display = "block";
     playBtn.style.display = "none";
 
     let index = 0;
-    let playIntervalID = setInterval(function(){
-        if(index == (years.length)) {
+    let playIntervalID = setInterval(function () {
+        if (index == (years.length)) {
             index = 0;
         }
         setHeatmapData(heatMapLayer, years[index])
@@ -44,8 +42,6 @@ let playHeatMap = (heatMapLayer) => {
     }, 2000)
     initStopBtnListener(playIntervalID)
 }
-
-
 
 let getConfig = () => {
     let cfg = {
@@ -57,7 +53,6 @@ let getConfig = () => {
     return cfg;
 }
 
-
 let getBaseLayer = () => {
     let baseLayer = L.tileLayer(
         'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -68,46 +63,20 @@ let getBaseLayer = () => {
 }
 
 let getHeatMapData = (year) => {
-
-
     let heatMapData = []
     json.forEach(cLocation => {
-        if(year == 2007) {
-            heatMapData.push({
-                lat: cLocation.lat,
-                lng: cLocation.lng,
-                value: cLocation.pop_est_2007
-            })
-        } else  if(year == 2008) {
-            heatMapData.push({
-                lat: cLocation.lat,
-                lng: cLocation.lng,
-                value: cLocation.pop_est_2008
-            })
-        } else if(year == 2009) {
-            heatMapData.push({
-                lat: cLocation.lat,
-                lng: cLocation.lng,
-                value: cLocation.pop_est_2009
-            })
-        } else  if(year == 2010) {
-            heatMapData.push({
-                lat: cLocation.lat,
-                lng: cLocation.lng,
-                value: cLocation.pop_est_2010
-            })
+        let popEstimates = {
+            '2007': cLocation.pop_est_2007,
+            '2008': cLocation.pop_est_2008,
+            '2009': cLocation.pop_est_2009,
+            '2010': cLocation.pop_est_2010
         }
-    })
-
-/*
-    //TODO: MAKE THE POP_EST DYNAMIC SO IT TAKES THE YEAR VARIABLE AND APPENDS TO POPEST
-    let heatMapData =json.map(cLocation =>
-        ({
+        heatMapData.push({
             lat: cLocation.lat,
             lng: cLocation.lng,
-            value: cLocation.pop_est_2007
-        }))
-        */
+            value: popEstimates[year]
+        })
+    })
     return heatMapData;
 }
 
@@ -126,7 +95,7 @@ const initHeatMap = function () {
     setHeatmapData(heatMapLayer, initYear)
     initToolTip(heatMapLayer)
     initButtonListeners(heatMapLayer)
-    
+
 }
 
 let createHeatMap = (baseLayer, heatMapLayer, maxBounds) => {
@@ -146,8 +115,6 @@ let createHeatMap = (baseLayer, heatMapLayer, maxBounds) => {
     return heatMap
 }
 
-
-
 let getMaxBounds = () => {
     let maxBounds = L.latLngBounds(
         L.latLng(5.499550, -167.276413), //Southwest
@@ -158,7 +125,7 @@ let getMaxBounds = () => {
 
 let setHeatmapData = (heatMapLayer, year) => {
 
-console.log(heatMapLayer)
+    console.log(heatMapLayer)
 
     let heatMapData = getHeatMapData(year)
     let min = Math.min(...heatMapData.map(location => location.value))
