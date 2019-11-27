@@ -1,6 +1,7 @@
 /* GENERAL */
 
 body {
+    width: 100%;
     padding: 0%; 
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -15,13 +16,11 @@ body::-webkit-scrollbar {
     margin-top: 12%;
     width: 100%;
 }
-
 /* GENERAL END */
 
 
 
 /* HEADER */
-
 .header {
     position: fixed;
     color: white;
@@ -223,7 +222,6 @@ section {
 }
 
 section .section-title {
-    width: 100%;
     text-align: center;
     color: #007b5e;
     margin-bottom: 50px;
@@ -235,7 +233,7 @@ section .section-title {
     width: 100%;
     color: #ffffff;
     margin-top: 5%;
-    background-color: #283655 !important;
+    background: #283655 !important;
 }
 
 #footer h5 {
