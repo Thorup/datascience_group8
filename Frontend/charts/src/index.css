@@ -1,6 +1,7 @@
 /* GENERAL */
 
 body {
+    padding: 0%; 
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -9,6 +10,7 @@ body::-webkit-scrollbar {
 }
 
 .main-content {
+    margin: 0px;
     text-align: center;
     margin-top: 12%;
     width: 100%;
@@ -54,13 +56,18 @@ body::-webkit-scrollbar {
 
 /* INTRODUCTION */
 
+.intro-container {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 10%;
+}
+
 .page-intro {
     font-size: 29px;
     padding: 2%;
 }
 
 #page-intro-right {
-    border-right: 1px solid #283655;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 /* INTRODUCTION END */
@@ -69,7 +76,15 @@ body::-webkit-scrollbar {
 
 
 
+
+
+
+
 /* MAPS */
+
+.map-title {
+    padding: 1%;
+}
 
 .map {
     border: 2px solid black;
@@ -104,10 +119,14 @@ body::-webkit-scrollbar {
 }
 
 .map-container {
-    margin-top: 6%;
+    border: 0.1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 10px 15px rgba(0, 0, 0, 0.2);
+    margin-top: 5%;
 }
 
 /* MAPS END */
+
+
 
 
 
@@ -122,6 +141,8 @@ body::-webkit-scrollbar {
 }
 
 /* CHARTS END */
+
+
 
 
 
@@ -202,6 +223,7 @@ section {
 }
 
 section .section-title {
+    width: 100%;
     text-align: center;
     color: #007b5e;
     margin-bottom: 50px;
@@ -209,9 +231,11 @@ section .section-title {
 }
 
 #footer {
+    border-top: rgba(0, 0, 0, 0.2);
+    width: 100%;
     color: #ffffff;
     margin-top: 5%;
-    background: #283655 !important;
+    background-color: #283655 !important;
 }
 
 #footer h5 {
@@ -283,6 +307,10 @@ section .section-title {
         padding-bottom: 0px;
         margin-bottom: 10px;
     }
+}
+
+#footer-title-right {
+    border-right: 3px solid #eeeeee;
 }
 
 
