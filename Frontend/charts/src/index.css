@@ -234,7 +234,7 @@ section .section-title {
 }
 
 #footer {
-    min-width: 180vh !important;
+    min-width: 100% !important;
     border-top: rgba(0, 0, 0, 0.2);
     width: 100%;
     color: #ffffff;
