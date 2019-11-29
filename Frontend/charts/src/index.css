@@ -58,6 +58,8 @@ body::-webkit-scrollbar {
 /* INTRODUCTION */
 
 .intro-container {
+    text-align: center;
+    width: 100%;
     border: 1px solid rgba(0, 0, 0, 0.2);
     padding: 10%;
 }
@@ -123,7 +125,7 @@ body::-webkit-scrollbar {
     border: 0.1px solid rgba(0, 0, 0, 0.2);
     box-shadow: 10px 15px rgba(0, 0, 0, 0.2);
     margin-top: 5%;
-    min-width: 85vh !important;
+    min-width: 83vh !important;
 }
 
 /* MAPS END */
