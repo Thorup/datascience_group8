@@ -78,7 +78,8 @@ def get_stateabr_yearly_opioid_use_dict(opioid_df):
     for year in list_of_years:
         rdd = opioid_df.rdd.map(lambda row: filter_year_from_row(
             row, year)).filter(lambda x: x)
-        county_drug_map = rdd.map(lambda row: get_yearly_row(row, year))
+        opioid_reduced_map = rdd.reduceByKey(lambda x, y: x+y)
+        county_drug_map = opioid_reduced_map.map(lambda row: get_yearly_row(row, year))
         reduced_map = county_drug_map.reduceByKey(lambda s, t: s + t).collect()
         df_reduced = sqlContext.createDataFrame(reduced_map).withColumnRenamed(
             "_1", "fips").withColumnRenamed("_2", "opioid_factor")
@@ -92,7 +93,7 @@ def get_yearly_row(row, year):
     county =  row.buyer_county.lower().replace(" ", "")
     stateabr_county = stateabr + county
     opioid_factor = row.opioid_factor
-    print(stateabr_county, opioid_factor, year)
+    #print(stateabr_county, opioid_factor, year)
     return (stateabr_county, opioid_factor)
 
 
