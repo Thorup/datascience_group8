@@ -70,6 +70,7 @@ def filter_year_from_row(row, year):
     return
 
 
+
 def get_stateabr_yearly_opioid_use_dict(opioid_df):
     list_of_dfs = []
     list_of_years = ["2007", "2008", "2009", "2010", "2011", "2012"]
@@ -77,8 +78,7 @@ def get_stateabr_yearly_opioid_use_dict(opioid_df):
     for year in list_of_years:
         rdd = opioid_df.rdd.map(lambda row: filter_year_from_row(
             row, year)).filter(lambda x: x)
-        county_drug_map = rdd.map(lambda row: (row.buyer_state.lower().replace(
-            " ", "") + row.buyer_county.lower().replace(" ", ""), row.opioid_factor))
+        county_drug_map = rdd.map(lambda row: get_yearly_row(row, year))
         reduced_map = county_drug_map.reduceByKey(lambda s, t: s + t).collect()
         df_reduced = sqlContext.createDataFrame(reduced_map).withColumnRenamed(
             "_1", "fips").withColumnRenamed("_2", "opioid_factor")
@@ -86,25 +86,38 @@ def get_stateabr_yearly_opioid_use_dict(opioid_df):
     return list_of_dfs
 
 
+
+def get_yearly_row(row, year):
+    stateabr = row.buyer_state.lower().replace(" ", "")
+    county =  row.buyer_county.lower().replace(" ", "")
+    stateabr_county = stateabr + county
+    opioid_factor = row.opioid_factor
+    print(stateabr_county, opioid_factor, year)
+    return (stateabr_county, opioid_factor)
+
+
+
+
 def swap_stateabr_with_fips(list_of_dfs):
     fips_dict = get_state_county_fips_dict()
     swapped_dfs = []
     for df in list_of_dfs:
-        df.show()
-        rdd = df.rdd.map(lambda row: (fips_dict.get(row.fips, row.opioid_factor)).collect()
-
+        #df.show()
+        rdd = df.rdd.map(lambda row: (fips_dict.get(row.fips), row.opioid_factor)).filter(lambda x: x[0] != None).collect()
+        
+    return -1
 
 def append_additional_data(list_of_dfs):
     return -1;
 
 
 def create_yearly_dataset():
-    opioid_data = get_dataframe_from_csv(
+    opioid_data=get_dataframe_from_csv(
         "/home/mads/Desktop/datascience_group8/dataaggregation/arcos_all_washpost.csv")
-    opioid_data = calc_opioid_factor(opioid_data)
-    opioid_data_yearly = get_stateabr_yearly_opioid_use_dict(opioid_data)
-    opioid_data_yearly = swap_stateabr_with_fips(opioid_data_yearly)
-    opioid_data_yearly = append_additional_data(opioid_data_yearly)
+    opioid_data=calc_opioid_factor(opioid_data)
+    opioid_data_yearly=get_stateabr_yearly_opioid_use_dict(opioid_data)
+    opioid_data_yearly=swap_stateabr_with_fips(opioid_data_yearly)
+    opioid_data_yearly=append_additional_data(opioid_data_yearly)
     return opioid_data_yearly
 
 
