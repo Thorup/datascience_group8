@@ -4,7 +4,6 @@ from pyspark.sql.types import StructType, StructField, IntegerType, StringType
 from pyspark.sql import functions as F
 from pyspark.sql.functions import monotonically_increasing_id
 
-
 conf = SparkConf().set('spark.driver.host', '127.0.0.1')
 sc = SparkContext(master='local', appName='myAppName', conf=conf)
 sqlContext = SQLContext(sc)
@@ -53,8 +52,8 @@ def get_state_county_fips_dict():
 
 
 def print_fips_dict():
-   for k, v in get_state_county_fips_dict().items():
-       print(k, v)
+    for k, v in get_state_county_fips_dict().items():
+        print(k, v)
 
 
 def append_fips_to_opioid_data():
@@ -100,13 +99,14 @@ def append_additional_data(list_of_dfs):
 
 
 def create_yearly_dataset():
-    opioid_data=get_dataframe_from_csv(
+    opioid_data = get_dataframe_from_csv(
         "/home/mads/Desktop/datascience_group8/dataaggregation/arcos_all_washpost.csv")
-    opioid_data=calc_opioid_factor(opioid_data)
-    opioid_data_yearly=get_stateabr_yearly_opioid_use_dict(opioid_data)
-    opioid_data_yearly=swap_stateabr_with_fips(opioid_data_yearly)
-    opioid_data_yearly=append_additional_data(opioid_data_yearly)
+    opioid_data = calc_opioid_factor(opioid_data)
+    opioid_data_yearly = get_stateabr_yearly_opioid_use_dict(opioid_data)
+    opioid_data_yearly = swap_stateabr_with_fips(opioid_data_yearly)
+    opioid_data_yearly = append_additional_data(opioid_data_yearly)
     return opioid_data_yearly
+
 
 def create_monthly_dataset():
     return -1;
