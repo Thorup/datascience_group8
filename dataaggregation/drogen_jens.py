@@ -1,3 +1,4 @@
+
 from pyspark import SparkConf, SparkContext
 from pyspark.sql import Row, SparkSession, SQLContext, Column as Col
 from pyspark.sql.types import StructType, StructField, IntegerType, StringType
@@ -16,9 +17,11 @@ opioid_csv_path = "/home/mads/Desktop/datascience_group8/dataaggregation/arcos_a
 def start_spark_context():
     return sc
 
+
 def get_dataframe_from_csv(filepath):
     df = sqlContext.read.csv(path=filepath, header=True)
     return df
+
 
 def calc_opioid_factor(df):
     df1 = df.select(df['dosage_unit'] * df['quantity'] * df['dos_str']
@@ -29,9 +32,11 @@ def calc_opioid_factor(df):
         df11.columnindex).drop(df22.columnindex)
     return new_df
 
+
 def save_df_as_csv(df, filepath):
     df.select("*").repartition(1).write.format(
         "com.databricks.spark.csv").option('header', 'true').save(filepath)
+
 
 def get_fips_map_element(row):
     fips = row.fips
@@ -42,20 +47,18 @@ def get_fips_map_element(row):
     result = (key, fips)
     return result;
 
+
 def get_state_county_fips_dict():
     county_df = get_dataframe_from_csv(county_csv_path)
     county_fips_list = county_df.rdd.map(get_fips_map_element).collect()
     county_fips_dict = dict(county_fips_list)
     return county_fips_dict
 
-def print_fips_dict():
-    for k, v in get_state_county_fips_dict().items():
-        print(k, v)
-
 def filter_year_from_row(row, year):
     if year in row.transaction_date[len(row.transaction_date) - 4:]:
         return row
     return
+
 
 def get_fips_yearly_opioid_use_dataframes(opioid_df):
     list_of_dfs = []
@@ -71,6 +74,8 @@ def get_fips_yearly_opioid_use_dataframes(opioid_df):
         list_of_dfs.append(df_reduced)
     return list_of_dfs
 
+
+
 def get_yearly_row(row):
     stateabr = row.buyer_state.lower().replace(" ", "")
     county =  row.buyer_county.lower().replace(" ", "")
@@ -78,13 +83,15 @@ def get_yearly_row(row):
     opioid_factor = row.opioid_factor
     return (stateabr_county, opioid_factor)
 
+
+
+
 def swap_stateabr_with_fips(list_of_dfs):
     fips_dict = get_state_county_fips_dict()
     swapped_dfs = []
     for df in list_of_dfs:
         rdd = df.rdd.map(lambda row: (fips_dict.get(row.fips), row.opioid_factor, row.year)).filter(lambda x: x[0] != None).collect()
         swapped_df = sqlContext.createDataFrame(rdd).withColumnRenamed("_1", "fips").withColumnRenamed("_2", "opioid_factor").withColumnRenamed("_3", "year")
-        swapped_df.show()
         swapped_dfs.append(swapped_df)
     return swapped_dfs
 
@@ -94,6 +101,7 @@ def swap_state_county_monthly_with_fips(df):
     swapped_df = sqlContext.createDataFrame(rdd).withColumnRenamed("_1", "fips").withColumnRenamed("_2", "month").withColumnRenamed("_3", "year").withColumnRenamed("_4", "opioid_factor")
     return swapped_df
 
+
 def extract_state_and_sum_opioid_factor(opioid_data_yearly):
     state_summed_opioid_factor = []
     for df in opioid_data_yearly:
@@ -102,7 +110,6 @@ def extract_state_and_sum_opioid_factor(opioid_data_yearly):
         rdd = rdd.reduceByKey(lambda x,y: x+y)
         new_df = sqlContext.createDataFrame(rdd)
         new_df = new_df.withColumnRenamed("_1", "state_abr").withColumnRenamed("_2", "opioid_factor").withColumn("year", lit(year))
-        new_df.show()
         state_summed_opioid_factor.append(new_df)
     return state_summed_opioid_factor
 
@@ -128,25 +135,40 @@ def get_fips_monthly_opioid_use_dataframes(opioid_df):
         split_col = split(df["key"], '-')
         df = df.withColumn("month", split_col.getItem(0)).withColumn("year", split_col.getItem(1)).withColumn("fips", split_col.getItem(2)).drop(df.key)
         df = swap_state_county_monthly_with_fips(df)
-        df.show()
         list_of_dfs.append(df)
+    return list_of_dfs
+        
+def union_all_dataframes(list_of_dfs):
+    df_unioned =  list_of_dfs[0];
+    for i in range(0, len(list_of_dfs)):
+        if (i < len(list_of_dfs) -1):
+            df_unioned = df_unioned.union(list_of_dfs[i+1])
+    return df_unioned
+
 
 def create_fips_yearly_dataset(opioid_data):
     opioid_data_yearly=get_fips_yearly_opioid_use_dataframes(opioid_data)
     opioid_data_yearly=swap_stateabr_with_fips(opioid_data_yearly)
-    return opioid_data_yearly
+    return union_all_dataframes(opioid_data_yearly)
 
 def create_state_yearly_dataset(opioid_data):
     opioid_data_yearly=get_fips_yearly_opioid_use_dataframes(opioid_data)
     state_summed_dataframes = extract_state_and_sum_opioid_factor(opioid_data_yearly)
-    return state_summed_dataframes
+    return union_all_dataframes(state_summed_dataframes)
 
 def create_fips_monthly_dataset(opioid_data):
     opioid_data_monthy = get_fips_monthly_opioid_use_dataframes(opioid_data)
+    return union_all_dataframes(opioid_data_monthy)
 
 
 opioid_data=get_dataframe_from_csv(opioid_csv_path)
 opioid_data=calc_opioid_factor(opioid_data)
-#create_fips_yearly_dataset(opioid_data)
-#create_state_yearly_dataset(opioid_data)
-create_fips_monthly_dataset(opioid_data)
+
+
+df_fips_yearly = create_fips_yearly_dataset(opioid_data)
+df_state_yearly = create_state_yearly_dataset(opioid_data)
+df_fips_monthly = create_fips_monthly_dataset(opioid_data)
+
+df_fips_yearly.show()
+df_state_yearly.show()
+df_fips_monthly.show()
