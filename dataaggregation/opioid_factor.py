@@ -11,7 +11,7 @@ conf = SparkConf().set('spark.driver.host', '127.0.0.1')
 sc = SparkContext(master='local', appName='myAppName', conf=conf)
 sqlContext = SQLContext(sc)
 county_csv_path = "county_lat_long.csv"
-opioid_csv_path = "reduced_original_dataset.csv"
+opioid_csv_path = "reduced_original_dataset_100k.csv"
 
 
 def start_spark_context():
@@ -26,6 +26,7 @@ def get_dataframe_from_csv(filepath):
 def calc_opioid_factor(df):
     df1 = df.select(df['dosage_unit'] * df['quantity'] * df['dos_str']
                     ).withColumnRenamed("((dosage_unit * quantity) * dos_str)", "opioid_factor")
+    df1 = sqlContext.createDataFrame(df1.rdd.filter(lambda row: row[0] is not None))
     df11 = df1.withColumn("columnindex", monotonically_increasing_id())
     df22 = df.withColumn("columnindex", monotonically_increasing_id())
     new_df = df22.join(df11, df22.columnindex == df11.columnindex, 'inner').drop(
@@ -67,7 +68,7 @@ def get_fips_yearly_opioid_use_dataframes(opioid_df):
     for year in list_of_years:
         rdd = opioid_df.rdd.map(lambda row: filter_year_from_row(
             row, year)).filter(lambda x: x)
-        county_drug_map = rdd.map(get_yearly_row)
+        county_drug_map = rdd.map(get_yearly_row).filter(lambda row: row[1] is not None)
         reduced_map = county_drug_map.reduceByKey(lambda s, t: s + t).collect()
         df_reduced = sqlContext.createDataFrame(reduced_map).withColumnRenamed(
             "_1", "fips").withColumnRenamed("_2", "opioid_factor").withColumn("year", lit(year))
