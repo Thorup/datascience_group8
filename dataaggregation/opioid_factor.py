@@ -10,8 +10,8 @@ from pyspark.sql.functions import split
 conf = SparkConf().set('spark.driver.host', '127.0.0.1')
 sc = SparkContext(master='local', appName='myAppName', conf=conf)
 sqlContext = SQLContext(sc)
-county_csv_path = "/home/mads/Desktop/datascience_group8/dataaggregation/CountyTRUE.csv"
-opioid_csv_path = "/home/mads/Desktop/datascience_group8/dataaggregation/arcos_all_washpost.csv"
+county_csv_path = "county_lat_long.csv"
+opioid_csv_path = "reduced_original_dataset.csv"
 
 
 def start_spark_context():
@@ -74,17 +74,12 @@ def get_fips_yearly_opioid_use_dataframes(opioid_df):
         list_of_dfs.append(df_reduced)
     return list_of_dfs
 
-
-
 def get_yearly_row(row):
     stateabr = row.buyer_state.lower().replace(" ", "")
     county =  row.buyer_county.lower().replace(" ", "")
     stateabr_county = stateabr + county
     opioid_factor = row.opioid_factor
     return (stateabr_county, opioid_factor)
-
-
-
 
 def swap_stateabr_with_fips(list_of_dfs):
     fips_dict = get_state_county_fips_dict()
