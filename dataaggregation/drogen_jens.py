@@ -140,9 +140,8 @@ def get_fips_monthly_opioid_use_dataframes(opioid_df):
         
 def union_all_dataframes(list_of_dfs):
     df_unioned =  list_of_dfs[0];
-    for i in range(0, len(list_of_dfs)):
-        if (i < len(list_of_dfs) -1):
-            df_unioned = df_unioned.union(list_of_dfs[i+1])
+    for i in range(1, len(list_of_dfs)):
+        df_unioned = df_unioned.union(list_of_dfs[i])
     return df_unioned
 
 
