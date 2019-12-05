@@ -2,7 +2,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class CSVWriter {
-    private String outputFilename = "C:\\Users\\2rup\\Downloads\\pain-pills-in-the-usa\\arcos_all_washpost.csv";
+    private String outputFilename = "C:\\Users\\Lasse\\Downloads\\arcos_all_washpost.csv";
     private FileWriter fileWriter;
 
     public CSVWriter() {
@@ -58,7 +58,7 @@ public class CSVWriter {
                 }
             }
             if (isWithinYear(dataInstance.getDataMap().get("TRANSACTION_DATE".toLowerCase()))) {
-                System.out.println(csvLine);
+                //System.out.println(csvLine);
                 fileWriter.write(csvLine);
             }
         } catch (IOException ex) {
@@ -68,6 +68,7 @@ public class CSVWriter {
 
     public void closeFileWriter() {
         try {
+            fileWriter.flush();
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -76,19 +77,19 @@ public class CSVWriter {
 
     private boolean isIncluded(String dataKey) {
         if ("BUYER_DEA_NO".toLowerCase().equals(dataKey)) {
-            return true;
+            return false;
         } else if ("BUYER_BUS_ACT".toLowerCase().equals(dataKey)) {
-            return true;
+            return false;
         } else if ("BUYER_NAME".toLowerCase().equals(dataKey)) {
-            return true;
+            return false;
         } else if ("BUYER_ADDRESS1".toLowerCase().equals(dataKey)) {
-            return true;
+            return false;
         } else if ("BUYER_CITY".toLowerCase().equals(dataKey)) {
-            return true;
+            return false;
         } else if ("BUYER_STATE".toLowerCase().equals(dataKey)) {
             return true;
         } else if ("BUYER_ZIP".toLowerCase().equals(dataKey)) {
-            return true;
+            return false;
         } else if ("BUYER_COUNTY".toLowerCase().equals(dataKey)) {
             return true;
         } else if ("DRUG_NAME".toLowerCase().equals(dataKey)) {
@@ -100,9 +101,9 @@ public class CSVWriter {
         } else if ("DOSAGE_UNIT".toLowerCase().equals(dataKey)) {
             return true;
         } else if ("Product_Name".toLowerCase().equals(dataKey)) {
-            return true;
+            return false;
         } else if ("Measure".toLowerCase().equals(dataKey)) {
-            return true;
+            return false;
         } else if ("dos_str".toLowerCase().equals(dataKey)) {
             return true;
         } else {

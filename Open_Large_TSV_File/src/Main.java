@@ -1,9 +1,9 @@
 public class Main {
     public static void main(String[] args) {
         ReadTSVFile fileReader = new ReadTSVFile();
-        JsonWriter jsonWriter = new JsonWriter();
+        //JsonWriter jsonWriter = new JsonWriter();
         CSVWriter csvWriter = new CSVWriter();
-        SQLWriter sqlWriter = new SQLWriter();
+        //SQLWriter sqlWriter = new SQLWriter();
 
         //jsonWriter.startJSon();
         //fileReader.readFileAndWriteToJson(jsonWriter);

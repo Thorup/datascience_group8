@@ -4,7 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class ReadTSVFile {
-    private String inputFilename = "C:\\Users\\2rup\\Downloads\\pain-pills-in-the-usa\\arcos_all_washpost.tsv";
+    private String inputFilename = "C:\\Users\\Lasse\\Downloads\\arcos_all_washpost.tsv";
     private BufferedReader bufferedReader;
     private String[] dataTypes;
 
@@ -62,12 +62,14 @@ public class ReadTSVFile {
     }
 
     public void readFileAndWriteToCSV(CSVWriter csvWriter) {
+        int printCounter = 0;
+        int rollover = 100000;
         String line;
         try {
             TSVInstance dataInstance = new TSVInstance();
             int lineNumber = 0;
             csvWriter.writeFirstLine(dataTypes);
-            while ((line = bufferedReader.readLine()) != null && lineNumber < 1000) {
+            while ((line = bufferedReader.readLine()) != null) {
                 String[] dataElements = line.split("\\t");
                 dataInstance.resetTSVInstance();
                 for (int i = 0; i < dataElements.length; i++) {
