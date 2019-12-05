@@ -10,8 +10,8 @@ from pyspark.sql.functions import split
 conf = SparkConf().set('spark.driver.host', '127.0.0.1')
 sc = SparkContext(master='local', appName='myAppName', conf=conf)
 sqlContext = SQLContext(sc)
-county_csv_path = "county_lat_long.csv"
-opioid_csv_path = "reduced_original_dataset_100k.csv"
+county_csv_path = "data/county_lat_long.csv"
+opioid_csv_path = "data/reduced_original_dataset_100k.csv"
 
 
 def start_spark_context():
@@ -133,6 +133,7 @@ def get_fips_monthly_opioid_use_dataframes(opioid_df):
         df = swap_state_county_monthly_with_fips(df)
         list_of_dfs.append(df)
     return list_of_dfs
+
         
 def union_all_dataframes(list_of_dfs):
     df_unioned =  list_of_dfs[0];
@@ -156,6 +157,10 @@ def create_fips_monthly_dataset(opioid_data):
     return union_all_dataframes(opioid_data_monthy)
 
 
+def save_csv(df, filename):
+    df.select("*").repartition(1).write.format("com.databricks.spark.csv").option('header', 'true').save("/"+filename)
+
+
 opioid_data=get_dataframe_from_csv(opioid_csv_path)
 opioid_data=calc_opioid_factor(opioid_data)
 
@@ -164,6 +169,11 @@ df_fips_yearly = create_fips_yearly_dataset(opioid_data)
 df_state_yearly = create_state_yearly_dataset(opioid_data)
 df_fips_monthly = create_fips_monthly_dataset(opioid_data)
 
-df_fips_yearly.show()
-df_state_yearly.show()
-df_fips_monthly.show()
+#save_csv(df_state_yearly, "state_yearly")
+save_csv(df_fips_yearly, "fips_yearly")
+save_csv(df_fips_monthly, "fips_monthly")
+
+
+#df_fips_yearly.show()
+#df_state_yearly.show()
+#df_fips_monthly.show()
