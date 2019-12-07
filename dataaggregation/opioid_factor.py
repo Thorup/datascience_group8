@@ -15,7 +15,7 @@ sqlContext = SQLContext(sc)
 #Path to local dataset containing the latitudes and longitudes of counties in the U.S
 county_csv_path = "data/county_lat_long.csv"
 #Path to reduced original dataset containing opioid information
-opioid_csv_path = "data/reduced_100_with_tabs.csv"
+opioid_csv_path = "data/arcos_all_washpost_full_dataset.csv"
 
 
 
@@ -217,14 +217,14 @@ opioid_data=calc_opioid_factor(opioid_data)
 
 
 df_fips_yearly = create_fips_yearly_dataset(opioid_data)
-#df_state_yearly = create_state_yearly_dataset(opioid_data)
-#df_fips_monthly = create_fips_monthly_dataset(opioid_data)
+df_state_yearly = create_state_yearly_dataset(opioid_data)
+df_fips_monthly = create_fips_monthly_dataset(opioid_data)
 
-#save_csv(df_state_yearly, "state_yearly")
-#save_csv(df_fips_yearly, "fips_yearly")
-#save_csv(df_fips_monthly, "fips_monthly")
+save_csv(df_state_yearly, "state_yearly_full")
+save_csv(df_fips_yearly, "fips_yearly_full")
+save_csv(df_fips_monthly, "fips_monthly_full")
 
 
-df_fips_yearly.show()
+#df_fips_yearly.show()
 #df_state_yearly.show()
 #df_fips_monthly.show()
