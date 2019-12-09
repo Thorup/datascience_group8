@@ -1,7 +1,7 @@
 import L from 'leaflet'
 import 'leaflet-css'
 let statesData = require('../data/states-data.json');
-let stateYearlyOpioidUse = require('../data/full_sets/state_yearly.json')
+let stateYearlyOpioidUse = require('../data/full_sets/state_yearly_full.json')
 let stateYearlyPopulation = require('../data/full_sets/state_population.json')
 
 let enableInteraction = false;
@@ -33,8 +33,8 @@ let getPopulationByYear = (stateName, year) => {
 
 let getOpioidUseByYear = (stateName, year) => {
     return stateYearlyOpioidUse.filter(state => 
-       state.year == year && state.state_name == stateName
-       )[0].opioid_factor
+       state.Year == year && state.State == stateName
+       )[0].Opioid_Factor
 }
 
 let calcDensity = (state, year) => {
