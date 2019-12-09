@@ -1,5 +1,5 @@
 import vegaEmbed from 'vega-embed'
-let data = require('../data/data.json');
+let data = require('../data/states-data.json');
 
 
 let initScatterMatrix = () => {
@@ -13,10 +13,10 @@ let initScatterMatrix = () => {
             column: ["avgInc", "homelessPercent", "crimePercent", "unemployedPercent"]
         },
         spec: {
-            width: 400,
-            height: 400,
+            width: 300,
+            height: 300,
             data: {
-                url: "../data/data.json"
+                url: "../data/full_sets/state_population.json"
             },
             selection: "",
             mark: "point",

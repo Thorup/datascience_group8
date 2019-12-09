@@ -1,4 +1,4 @@
-const json = require('../data/countylocations.json');
+const json = require('../data/full_sets/countylocations.json');
 import vegaEmbed from 'vega-embed'
 
 

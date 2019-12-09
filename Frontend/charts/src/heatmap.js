@@ -1,7 +1,7 @@
 import HeatmapOverlay from 'leaflet-heatmap'
 import L from 'leaflet'
 import 'leaflet-css'
-let json = require('../data/countylocations.json');
+let json = require('../data/full_sets/countylocations.json');
 let enableInteraction = false;
 
 let initButtonListeners = (heatMapLayer) => {
