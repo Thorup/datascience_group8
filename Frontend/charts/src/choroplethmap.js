@@ -25,45 +25,42 @@ let getMaxBounds = () => {
     return maxBounds;
 }
 
-let getPopulationByYear = (year) => {
-    for(let i = 0; i < stateYearlyPopulation.length; i++) {
-        if(stateYearlyPopulation.year == year){
-            return stateYearlyPopulation.population;
-        }
-    }
+let getPopulationByYear = (stateName, year) => {
+    return stateYearlyPopulation.filter(state =>
+       state.State == stateName && state.year == year
+    )[0].population
 }
 
-let getOpioidUseByYear = (state, year) => {
-    for(let i = 0; i < stateYearlyOpioidUse.length; i++) {
-        if(stateYearlyOpioidUse.year == year && stateYearlyOpioidUse.state == state) {
-            return stateYearlyOpioidUse.opioid_factor
-        }
+let getOpioidUseByYear = (stateName, year) => {
+    return stateYearlyOpioidUse.filter(state => 
+       state.year == year && state.state_name == stateName
+       )[0].opioid_factor
+}
+
+let calcDensity = (state, year) => {
+    return getOpioidUseByYear(state, year)/getPopulationByYear(state, year)
+}
+
+let getOpioidStatePolygon = (stateData, year) => {
+    return {
+        "type": "Feature",
+        "id": stateData.id,
+        "properties": {
+            "name": stateData.properties.name,
+            "density": calcDensity(stateData.properties.name, year)
+        },
+        "geometry": stateData.geometry
     }
 }
 
 let createStateDataWithOpioidData = (year) => {
-    /*
-    statesDataForYear = statesData.map(stateData => {
-        population = getPopulationByYear(year)
-        opioidUse = getOpioidUseByYear(stateData.features.properties.name, year)
-        density = opioidUse/population
-        return {
-            "type": "FeatureCollection",
-            "features": [{
-                "type": "Feature",
-                "id": stateData.features[0].id,
-                "properties": {
-                    "name": stateData[0].properties.name,
-                    "density": density
-                },
-                "geometry": stateData.geometry
-            }]
-
-        }
-    })
-    */
-
-    return statesData;
+    return {
+        "type": "FeatureCollection",
+        "features": statesData
+            .features
+            .map(stateData =>
+                getOpioidStatePolygon(stateData, year))
+    }
 }
 
 let getColor = (d) => {
@@ -108,6 +105,7 @@ let initChoroMap = () => {
     })
 
     let choroOpioidData = createStateDataWithOpioidData("2007");
+    console.log(choroOpioidData)
     L.geoJson(choroOpioidData, {
         style: style
     }).addTo(map);
