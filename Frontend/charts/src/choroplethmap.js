@@ -112,6 +112,7 @@ let initStopBtnListener = (layer, playIntervalID) => {
     })
 }
 
+
 let playChoroMap = (layer) => {
     let years = [...new Set(stateYearlyOpioidUse
         .map(state => state.Year))]
@@ -140,6 +141,7 @@ let setYearLabel = (year) => {
 
 let setChoroMapData = (layer, year) => {
     let choroOpioidData = createStateDataWithOpioidData(year, statesData);
+    setYearLabel(year)
     layer.clearLayers(); 
     layer.addData(choroOpioidData);
 }

@@ -185,6 +185,12 @@ body::-webkit-scrollbar {
     display: none;
 }
 
+.btnPause {
+    bottom: 0px;
+    right: 90px;
+    display:none;
+}
+
 
 .map-button {
     position: absolute;
