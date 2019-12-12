@@ -64,7 +64,8 @@ let createBarChart = (data) => {
             "y": {
                 "field": "opioidFactor",
                 "type": "quantitative",
-                "sort": "-x"
+                "sort": "-x",
+                "scale": {"domain": [0, 150000]}
             }
         }
     }
