@@ -2,8 +2,6 @@ import L from 'leaflet'
 import 'leaflet-css'
 let statesData = require('../data/states-data.json');
 let stateYearlyOpioidUse = require('../data/full_sets/state_yearly_full.json')
-let stateYearlyPopulation = require('../data/full_sets/state_population.json')
-
 let enableInteraction = false;
 
 let getBaseLayer = () => {
@@ -26,51 +24,58 @@ let getMaxBounds = () => {
 }
 
 let getPopulationByYear = (stateName, year) => {
-    return stateYearlyPopulation.filter(state =>
-       state.State == stateName && state.year == year
-    )[0].population
+    let state = stateYearlyOpioidUse.filter(state =>
+        state.State == stateName && state.Year == year
+    )
+    let population = null;
+    if(state[0] != undefined) {
+        population = state[0].Population
+    }
+    return population;
 }
 
 let getOpioidUseByYear = (stateName, year) => {
-    return stateYearlyOpioidUse.filter(state => 
-       state.Year == year && state.State == stateName
-       )[0].Opioid_Factor
+    let state = stateYearlyOpioidUse.filter(state =>
+        state.Year == year && state.State == stateName
+    )
+    let opioidFactor = null
+    if(state[0] != undefined){
+        opioidFactor = state[0].Opioid_Factor
+    }
+    return opioidFactor;
 }
 
 let calcDensity = (state, year) => {
-    return getOpioidUseByYear(state, year)/getPopulationByYear(state, year)
+    return getOpioidUseByYear(state, year) / getPopulationByYear(state, year)
 }
 
-let getOpioidStatePolygon = (stateData, year) => {
-    return {
-        "type": "Feature",
-        "id": stateData.id,
-        "properties": {
-            "name": stateData.properties.name,
-            "density": calcDensity(stateData.properties.name, year)
-        },
-        "geometry": stateData.geometry
+
+let createStateDataWithOpioidData = (year, stateData) => {
+    for(let i = 0; i < stateData.features.length; i++) {
+        let statePolygon = stateData.features[i]
+        let density = calcDensity(statePolygon.properties.name, year)
+        statePolygon.properties.density = density;
     }
+    stateData.features = stateData.features.filter(state => !isNaN(state.properties.density))
+      return stateData
 }
 
-let createStateDataWithOpioidData = (year) => {
-    return {
-        "type": "FeatureCollection",
-        "features": statesData
-            .features
-            .map(stateData =>
-                getOpioidStatePolygon(stateData, year))
-    }
+let printMinMaxValues = (stateData) => {
+    //GET AND PRINT MIN AND MAX VALUES OF STATE OPIOID USE
+    let min = Math.min(...stateData.features.map(state => state.properties.density))
+    let max = Math.max(...stateData.features.map(state => state.properties.density))
+    console.log("MIN: " + min)
+    console.log("MAX: " + max)
 }
 
 let getColor = (d) => {
-    return d > 1000 ? '#800026' :
-        d > 500 ? '#BD0026' :
-        d > 200 ? '#E31A1C' :
-        d > 100 ? '#FC4E2A' :
-        d > 50 ? '#FD8D3C' :
-        d > 20 ? '#FEB24C' :
-        d > 10 ? '#FED976' :
+    return d > 50000 ? '#800026' :
+        d > 35000 ? '#BD0026' :
+        d > 20000 ? '#E31A1C' :
+        d > 15000 ? '#FC4E2A' :
+        d > 5000 ? '#FD8D3C' :
+        d > 2000 ? '#FEB24C' :
+        d > 1500 ? '#FED976' :
         '#FFEDA0';
 }
 
@@ -83,6 +88,60 @@ let style = (feature) => {
         dashArray: '3',
         fillOpacity: 0.7
     };
+}
+
+let initPlayButtonListener = (layer) => {
+   let playBtn = document.getElementById("btnPlayChoroMap")
+   playBtn.addEventListener('click', function() {
+       playChoroMap(layer)
+   })
+}
+
+let initStopBtnListener = (layer, playIntervalID) => {
+    let stopBtn = document.getElementById("btnStopChoroMap")
+    let startBtn = document.getElementById("btnPlayChoroMap")
+    stopBtn.addEventListener('click', function() {
+        let initialYear = [...new Set(stateYearlyOpioidUse
+            .map(state => state.Year))]
+            .filter(year => year != undefined)[0];
+        setChoroMapData(layer, initialYear)
+        clearInterval(playIntervalID)
+        stopBtn.style.display = 'none';
+        startBtn.style.display = 'block'
+
+    })
+}
+
+let playChoroMap = (layer) => {
+    let years = [...new Set(stateYearlyOpioidUse
+        .map(state => state.Year))]
+        .filter(year => year != undefined);
+    console.log("start choro")
+    let playBtn = document.getElementById('btnPlayChoroMap')
+    let stopBtn = document.getElementById('btnStopChoroMap')
+    stopBtn.style.display = "block";
+    playBtn.style.display = "none";
+    let index = 0;
+    let playIntervalID = setInterval(function () {
+        if (index == (years.length)) {
+            index = 0;
+        }
+        setYearLabel(years[index])
+        setChoroMapData(layer, years[index])
+        index++;
+    }, 1500)
+    initStopBtnListener(layer, playIntervalID)
+    
+}
+
+let setYearLabel = (year) => {
+    document.getElementById("yearLabel").innerHTML = year
+}
+
+let setChoroMapData = (layer, year) => {
+    let choroOpioidData = createStateDataWithOpioidData(year, statesData);
+    layer.clearLayers(); 
+    layer.addData(choroOpioidData);
 }
 
 
@@ -103,12 +162,17 @@ let initChoroMap = () => {
         zoomControl: enableInteraction,
         attributionControl: false
     })
-
-    let choroOpioidData = createStateDataWithOpioidData("2007");
-    console.log(choroOpioidData)
-    L.geoJson(choroOpioidData, {
+    let years = [...new Set(stateYearlyOpioidUse
+        .map(state => state.Year))]
+        .filter(year => year != undefined);
+    let initialYear = years[0]
+    let choroOpioidData = createStateDataWithOpioidData(initialYear, statesData);
+    let layer = L.geoJson(choroOpioidData, {
         style: style
     }).addTo(map);
+  
+    setYearLabel(initialYear)
+    initPlayButtonListener(layer)
 
 }
 

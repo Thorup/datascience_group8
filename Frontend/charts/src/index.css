@@ -89,6 +89,15 @@ body::-webkit-scrollbar {
 
 /* MAPS */
 
+#yearLabel {
+    position: absolute;
+    top: 0px;
+    left: 5px;
+    font-size: 30px;
+    font-weight: 900;
+    z-index: 10;
+}
+
 .map-title {
     padding: 1%;
 }
