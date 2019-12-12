@@ -1,6 +1,6 @@
 import L from 'leaflet'
 import 'leaflet-css'
-let statesData = require('../data/states-data.json');
+let statesBorderPolygons = require('../data/state-border-polygons.json');
 let stateYearlyOpioidUse = require('../data/full_sets/state_yearly_full.json')
 let enableInteraction = false;
 
@@ -140,7 +140,7 @@ let setYearLabel = (year) => {
 }
 
 let setChoroMapData = (layer, year) => {
-    let choroOpioidData = createStateDataWithOpioidData(year, statesData);
+    let choroOpioidData = createStateDataWithOpioidData(year, statesBorderPolygons);
     setYearLabel(year)
     layer.clearLayers(); 
     layer.addData(choroOpioidData);
@@ -168,7 +168,7 @@ let initChoroMap = () => {
         .map(state => state.Year))]
         .filter(year => year != undefined);
     let initialYear = years[0]
-    let choroOpioidData = createStateDataWithOpioidData(initialYear, statesData);
+    let choroOpioidData = createStateDataWithOpioidData(initialYear, statesBorderPolygons);
     let layer = L.geoJson(choroOpioidData, {
         style: style
     }).addTo(map);

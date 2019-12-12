@@ -1,22 +1,20 @@
 import vegaEmbed from 'vega-embed'
-let data = require('../data/states-data.json');
+let data = require('../data/full_sets/state_yearly_full.json');
 
 
 let initScatterMatrix = () => {
 
-    console.log(data)
-
     var scatterElement = {
         $schema: "https://vega.github.io/schema/vega-lite/v4.json",
         repeat: {
-            row: ["avgInc", "homelessPercent", "crimePercent", "unemployedPercent"],
-            column: ["avgInc", "homelessPercent", "crimePercent", "unemployedPercent"]
+            row: ["Average_Income", "Homeless_Percent", "Crime_Percent", "Unemployment_Percent", "Opioid_Factor"],
+            column: ["Average_Income", "Homeless_Percent", "Crime_Percent", "Unemployment_Percent", "Opioid_Factor"]
         },
         spec: {
             width: 300,
             height: 300,
             data: {
-                url: "../data/full_sets/state_population.json"
+                url: "../data/full_sets/state_yearly_full.json"
             },
             selection: "",
             mark: "point",

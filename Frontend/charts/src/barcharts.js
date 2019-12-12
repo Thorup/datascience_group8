@@ -1,45 +1,23 @@
-const json = require('../data/full_sets/countylocations.json');
+const json = require('../data/full_sets/state_yearly_full.json');
 import vegaEmbed from 'vega-embed'
 
 
 const initBarCharts = function () {
-    let data = getDummyData()
+    let data = getDataByYear("2007")
     let barChart = createBarChart(data)
     vegaEmbed('#opioid-bar-chart', barChart)
 }
 
 
-let getDummyData = () => {
-    return [{
-            "state": "Alabama",
-            "opioidFactor": 105
-        },
-        {
-            "state": "Colorado",
-            "opioidFactor": 54
-        },
-        {
-            "state": "Washington",
-            "opioidFactor": 19
-        },
-        {
-            "state": "California",
-            "opioidFactor": 191
-        },
-        {
-            "state": "Utah",
-            "opioidFactor": 71
-        },
-        {
-            "state": "Michigan",
-            "opioidFactor": 211
-        },
-        {
-            "state": "Alaska",
-            "opioidFactor": 132
-        },
-
-    ]
+let  getDataByYear = (year) => {
+    let opioidFactorByYear = json.map(state => {
+        return {
+            state: state.State,
+            opioidFactor: (state.Opioid_Factor/state.Population),
+            year: state.Year
+        }
+    }).filter(state => state.year == year)
+    return opioidFactorByYear
 }
 
 
@@ -59,7 +37,8 @@ let createBarChart = (data) => {
             },
             "y": {
                 "field": "opioidFactor",
-                "type": "quantitative"
+                "type": "quantitative",
+                "sort": "-x"
             }
         }
     }
