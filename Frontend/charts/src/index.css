@@ -157,6 +157,10 @@ body::-webkit-scrollbar {
     margin-top: 8%;
 }
 
+.chart-container {
+    margin-top: 8%
+}
+
 /* CHARTS END */
 
 

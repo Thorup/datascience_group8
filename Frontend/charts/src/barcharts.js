@@ -2,9 +2,12 @@ const json = require('../data/full_sets/state_yearly_full.json');
 import vegaEmbed from 'vega-embed'
 
 
-const initBarCharts = function () {
-    let data = getDataByYear("2007")
+const initBarCharts = function (year) {
+    let data = getDataByYear(year)
     let barChart = createBarChart(data)
+    if(document.getElementById("button-container").childNodes.length == 0){
+    appendYearlyButtons()
+    }
     vegaEmbed('#opioid-bar-chart', barChart)
 }
 
@@ -19,6 +22,29 @@ let  getDataByYear = (year) => {
     }).filter(state => state.year == year)
     return opioidFactorByYear
 }
+
+let appendYearlyButtons = () => {
+    let years = [...new Set(json
+        .map(state => state.Year))]
+        .filter(year => year != undefined);
+    let barchartContainer = document.getElementById("button-container")
+    for(let i = 0; i < years.length; i++) {
+        let year = years[i]
+        let btn = document.createElement('button')
+        btn.classList.add("barchart-year-btn")
+        btn.id = "btn-year-" + year
+        btn.innerHTML = year
+        btn.onclick = yearClicked
+        btn.value = year
+        console.log(btn)
+        barchartContainer.appendChild(btn)
+    }
+}
+
+let yearClicked = (e) => {
+    let year = e.target.value
+    initBarCharts(year)
+} 
 
 
 let createBarChart = (data) => {
