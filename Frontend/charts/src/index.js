@@ -8,6 +8,6 @@ barcharts.initBarCharts(2007)
 heatmap.initHeatMap()
 choroplethmap.initChoroMap()
 scatterMatrix.initScatterMatrix()
-countyChoro.initCountyChoro()
+countyChoro.initCountyChoro("2007", "1")
 
 

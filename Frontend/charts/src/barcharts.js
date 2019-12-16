@@ -22,7 +22,6 @@ let getDataByYear = (year) => {
             year: state.Year
         }
     }).filter(state => state.year == year)
-    console.log(opioidFactorByYear)
     return opioidFactorByYear
 }
 
@@ -94,7 +93,6 @@ let appendYearlyButtons = () => {
             btn.innerHTML = year
             btn.onclick = yearClicked
             btn.value = year
-            console.log(btn)
             barchartContainer.appendChild(btn)
         }
     }
@@ -125,7 +123,7 @@ let createBarChart = (data) => {
                 "type": "quantitative",
                 "sort": "-x",
                 "scale": {
-                    "domain": [0, 160000]
+                    "domain": [0, 60000]
                 }
             }
         }
