@@ -1,11 +1,15 @@
 const json = require('../data/full_sets/state_yearly_full.json');
+const usPopulation2010 = 309011475
 import vegaEmbed from 'vega-embed'
 
 
 const initBarCharts = function (year) {
     let data = getDataByYear(year)
     let barChart = createBarChart(data)
+    let yearlyBarDataAcc = getYearAccData()
+    let yearlyAccBarChart = createYearBarChart(yearlyBarDataAcc)
     appendYearlyButtons()
+    vegaEmbed("#opioid-bar-chart-year-acc", yearlyAccBarChart)
     vegaEmbed('#opioid-bar-chart', barChart)
 }
 
@@ -14,12 +18,67 @@ let getDataByYear = (year) => {
     let opioidFactorByYear = json.map(state => {
         return {
             state: state.State,
-            opioidFactor: (state.Opioid_Factor / state.Population),
+            opioidFactor: Math.floor(Math.floor(state.Opioid_Factor) / state.Population),
             year: state.Year
         }
     }).filter(state => state.year == year)
+    console.log(opioidFactorByYear)
     return opioidFactorByYear
 }
+
+let getYearAccData = () => {
+
+    let yearOpioidMap = json.map(state => {
+        return {
+            year: state.Year,
+            opioidFactor: state.Opioid_Factor
+        }
+    })
+    let yearOpioidMapReduced = []
+    const years = [...new Set(yearOpioidMap.map(o => o.year))].filter(year => year != undefined);
+    years.forEach(year => {
+        let sum = 0;
+        yearOpioidMap.forEach( o => {
+            if(o.year == year){
+            sum += o.opioidFactor;
+            }
+        })
+        sum = Math.floor(sum/usPopulation2010)
+        yearOpioidMapReduced.push({
+            year: year,
+            opioidFactor: sum
+        })
+    })
+    return yearOpioidMapReduced
+}
+
+let createYearBarChart = (data) => {
+    let barChart = {
+        "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+        "description": "A simple bar chart with embedded data.",
+        "title": "Average Opioid Use By Year",
+        "data": {
+            "values": data
+        },
+        "mark": "bar",
+        "encoding": {
+            "x": {
+                "field": "year",
+                "type": "ordinal"
+            },
+            "y": {
+                "field": "opioidFactor",
+                "type": "quantitative",
+                "sort": "-x",
+                "scale": {
+                    "domain": [0, 12000]
+                }
+            }
+        }
+    }
+    return barChart;
+}
+
 
 let appendYearlyButtons = () => {
     if (document.getElementById("button-container").childNodes.length == 0) {
@@ -66,7 +125,7 @@ let createBarChart = (data) => {
                 "type": "quantitative",
                 "sort": "-x",
                 "scale": {
-                    "domain": [0, 150000]
+                    "domain": [0, 160000]
                 }
             }
         }

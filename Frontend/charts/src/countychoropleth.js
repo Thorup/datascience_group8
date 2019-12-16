@@ -12,7 +12,7 @@ let initCountyChoro = () => {
         "data": [
           {
             "name": "unemp",
-            "url": "../data/full_sets/fips_monthly.json",
+            "url": "../data/full_sets/fips_monthly_TRUE.json",
             "format": {"type": "json", "parse": "auto"}
           },
           {
