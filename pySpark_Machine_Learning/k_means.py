@@ -43,11 +43,15 @@ df = prepareData()
 df.show()
 df= df.na.fill(1)
 
-vecAssembler = VectorAssembler(inputCols=df.columns, outputCol="features", handleInvalid="keep")
+#vecAssembler = VectorAssembler(inputCols=['Crime_Percent', 'Homeless_Percent', 'new_opioid_factor'], outputCol="features", handleInvalid="keep")
+#vecAssembler = VectorAssembler(inputCols=['Average_Income','Unemployment_Percent','new_opioid_factor'], outputCol="features", handleInvalid="keep")
+#vecAssembler = VectorAssembler(inputCols=['Homeless_Percent','Unemployment_Percent','new_opioid_factor'], outputCol="features", handleInvalid="keep")
+vecAssembler = VectorAssembler(inputCols=['Crime_Percent','Average_Income','new_opioid_factor'], outputCol="features", handleInvalid="keep")
+
 df2 = vecAssembler.transform(df)
 
 
-kMeans = KMeans().setK(20).setSeed(1)
+kMeans = KMeans().setK(5).setSeed(1)
 model = kMeans.fit(df2.select("features"))
 
 predictions = model.transform(df2)
