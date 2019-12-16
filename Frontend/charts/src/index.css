@@ -161,6 +161,14 @@ body::-webkit-scrollbar {
     margin-top: 8%
 }
 
+#opioid-bar-chart {
+    width: 90vw;
+}
+
+#opioid-bar-chart-year-acc{
+    width: 90vw;
+}
+
 /* CHARTS END */
 
 

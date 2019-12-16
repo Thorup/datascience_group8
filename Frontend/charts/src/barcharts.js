@@ -56,6 +56,8 @@ let createYearBarChart = (data) => {
         "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
         "description": "A simple bar chart with embedded data.",
         "title": "Average Opioid Use By Year",
+        "width": "container",
+        "height": 800,
         "data": {
             "values": data
         },
@@ -109,6 +111,8 @@ let createBarChart = (data) => {
     let barChart = {
         "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
         "description": "A simple bar chart with embedded data.",
+        "width": "container",
+        "height": 800,
         "data": {
             "values": data
         },

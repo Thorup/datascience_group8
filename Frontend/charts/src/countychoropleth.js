@@ -15,7 +15,6 @@ console.log(year)
   let reducedMap = monthlyFips
     .filter(county => county.year == year)
     .filter(county => county.month == month)
-    console.log(reducedMap)
     return reducedMap;
 }
 
