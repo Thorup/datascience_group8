@@ -12,16 +12,21 @@ let initCountyChoro = () => {
         "data": [
           {
             "name": "unemp",
-            "url": "data/unemployment.tsv",
-            "format": {"type": "tsv", "parse": "auto"}
+            "url": "../data/full_sets/fips_monthly.json",
+            "format": {"type": "json", "parse": "auto"}
           },
           {
             "name": "counties",
-            "url": "data/us-10m.json",
+            "url": "https://vega.github.io/vega/data/us-10m.json",
             "format": {"type": "topojson", "feature": "counties"},
             "transform": [
-              { "type": "lookup", "from": "unemp", "key": "id", "fields": ["id"], "values": ["rate"] },
-              { "type": "filter", "expr": "datum.rate != null" }
+              { "type": "lookup", "from": "unemp", "key": "fips", "fields": ["id"], "values": ["opioid_factor"] },
+              { "type": "filter", "expr": "datum.opioid_factor != null"},
+              { "type": "filter", "expr": "datum.year == 2007"},
+              { "type": "filter", "expr": "datum.month == 1"}
+
+
+              //{ "type": "filter", "expr": "datum.opioid_factor != null && datum.year == 2007 and datum.month == 1" },
             ]
           }
         ],
@@ -46,7 +51,7 @@ let initCountyChoro = () => {
           {
             "fill": "color",
             "orient": "bottom-right",
-            "title": "Unemployment",
+            "title": "Opioid use (monthly use in mg)",
             "format": "0.1%"
           }
         ],
@@ -56,8 +61,8 @@ let initCountyChoro = () => {
             "type": "shape",
             "from": {"data": "counties"},
             "encode": {
-              "enter": { "tooltip": {"signal": "format(datum.rate, '0.1%')"}},
-              "update": { "fill": {"scale": "color", "field": "rate"} },
+              "enter": { "tooltip": {"signal": "format(datum.opioid_factor, '0.1%')"}},
+              "update": { "fill": {"scale": "color", "field": "opioid_factor"} },
               "hover": { "fill": {"value": "red"} }
             },
             "transform": [
