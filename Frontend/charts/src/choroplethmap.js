@@ -117,7 +117,6 @@ let playChoroMap = (layer) => {
     let years = [...new Set(stateYearlyOpioidUse
         .map(state => state.Year))]
         .filter(year => year != undefined);
-    console.log("start choro")
     let playBtn = document.getElementById('btnPlayChoroMap')
     let stopBtn = document.getElementById('btnStopChoroMap')
     stopBtn.style.display = "block";

@@ -2,7 +2,21 @@ import vegaEmbed from 'vega-embed'
 let data = require('../data/full_sets/state_yearly_full.json');
 
 
+
+
+
 let initScatterMatrix = () => {
+    let opioidFactorAndPopulation = data.map(state => {
+        return {
+            State: state.State,
+            Opioid_Factor: state.Opioid_Factor/state.Population,
+            Crime_Percent: state.Crime_Percent,
+            Homeless_Percent: state.Homeless_Percent,
+            Average_Income: state.Average_Income,
+            Unemployment_Percent: state.Unemployment_Percent,
+            Year: state.Year
+        }
+    })
 
     var scatterElement = {
         $schema: "https://vega.github.io/schema/vega-lite/v4.json",
@@ -11,10 +25,10 @@ let initScatterMatrix = () => {
             column: ["Average_Income", "Homeless_Percent", "Crime_Percent", "Unemployment_Percent", "Opioid_Factor"]
         },
         spec: {
-            width: 300,
-            height: 300,
+            width: 150,
+            height: 150,
             data: {
-                url: "../data/full_sets/state_yearly_full.json"
+              "values": opioidFactorAndPopulation
             },
             selection: "",
             mark: "point",
@@ -28,13 +42,6 @@ let initScatterMatrix = () => {
                     on: "[mousedown[event.shiftKey], window:mouseup] > window:mousemove!",
                     translate: "[mousedown[event.shiftKey], window:mouseup] > window:mousemove!",
                     zoom: "wheel![event.shiftKey]"
-                },
-                grid: {
-                    type: "interval",
-                    resolve: "global",
-                    bind: "scales",
-                    translate: "[mousedown[!event.shiftKey], window:mouseup] > window:mousemove!",
-                    zoom: "wheel![!event.shiftKey]"
                 }
             },
             encoding: {

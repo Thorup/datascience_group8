@@ -1,79 +1,62 @@
 import vegaEmbed from 'vega-embed'
+let monthlyFips = require("../data/full_sets/fips_monthly_TRUE.json")
 
 
-let initCountyChoro = () => {
-    let choro = {
-    
-        "$schema": "https://vega.github.io/schema/vega/v5.json",
-        "width": 960,
-        "height": 500,
-        "autosize": "none",
-      
-        "data": [
-          {
-            "name": "unemp",
-            "url": "../data/full_sets/fips_monthly.json",
-            "format": {"type": "json", "parse": "auto"}
-          },
-          {
-            "name": "counties",
-            "url": "https://vega.github.io/vega/data/us-10m.json",
-            "format": {"type": "topojson", "feature": "counties"},
-            "transform": [
-              { "type": "lookup", "from": "unemp", "key": "fips", "fields": ["id"], "values": ["opioid_factor"] },
-              { "type": "filter", "expr": "datum.opioid_factor != null"},
-              { "type": "filter", "expr": "datum.year == 2007"},
-              { "type": "filter", "expr": "datum.month == 1"}
-
-
-              //{ "type": "filter", "expr": "datum.opioid_factor != null && datum.year == 2007 and datum.month == 1" },
-            ]
-          }
-        ],
-      
-        "projections": [
-          {
-            "name": "projection",
-            "type": "albersUsa"
-          }
-        ],
-      
-        "scales": [
-          {
-            "name": "color",
-            "type": "quantize",
-            "domain": [0, 0.15],
-            "range": {"scheme": "blues", "count": 7}
-          }
-        ],
-      
-        "legends": [
-          {
-            "fill": "color",
-            "orient": "bottom-right",
-            "title": "Opioid use (monthly use in mg)",
-            "format": "0.1%"
-          }
-        ],
-      
-        "marks": [
-          {
-            "type": "shape",
-            "from": {"data": "counties"},
-            "encode": {
-              "enter": { "tooltip": {"signal": "format(datum.opioid_factor, '0.1%')"}},
-              "update": { "fill": {"scale": "color", "field": "opioid_factor"} },
-              "hover": { "fill": {"value": "red"} }
-            },
-            "transform": [
-              { "type": "geoshape", "projection": "projection" }
-            ]
-          }
-        ]
-      }
-      vegaEmbed("#county-choro", choro)
+let initCountyChoro = (year, month) => {
+  let data = createDateData(year, month)
+  let choro = createChoroMap(data)
+  vegaEmbed("#county-choro", choro)
 }
 
+let createDateData = (year, month) => {
+
+console.log(year)
+
+  let reducedMap = monthlyFips
+    .filter(county => county.year == year)
+    .filter(county => county.month == month)
+    console.log(reducedMap)
+    return reducedMap;
+}
+
+let createChoroMap = (data) => {
+  let choro = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+    "width": 1000,
+    "height": 700,
+    "data": {
+      "url": "https://vega.github.io/vega/data/us-10m.json",
+      "format": {
+        "type": "topojson",
+        "feature": "counties"
+      }
+    },
+    "transform": [{
+      "lookup": "id",
+      "from": {
+        "data": {
+          "values": data
+        },
+        "key": "fips",
+        "fields": ["opioid_factor"]
+      }
+    }],
+    "projection": {
+      "type": "albersUsa"
+    },
+    "mark": "geoshape",
+    "encoding": {
+      "color": {
+        "field": "opioid_factor",
+        "type": "quantitative"
+      }
+    }
+  }
+  return choro
+}
+
+
+
 export {
-    initCountyChoro
+  initCountyChoro
 }
