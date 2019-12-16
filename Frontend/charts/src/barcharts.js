@@ -5,18 +5,16 @@ import vegaEmbed from 'vega-embed'
 const initBarCharts = function (year) {
     let data = getDataByYear(year)
     let barChart = createBarChart(data)
-    if(document.getElementById("button-container").childNodes.length == 0){
     appendYearlyButtons()
-    }
     vegaEmbed('#opioid-bar-chart', barChart)
 }
 
 
-let  getDataByYear = (year) => {
+let getDataByYear = (year) => {
     let opioidFactorByYear = json.map(state => {
         return {
             state: state.State,
-            opioidFactor: (state.Opioid_Factor/state.Population),
+            opioidFactor: (state.Opioid_Factor / state.Population),
             year: state.Year
         }
     }).filter(state => state.year == year)
@@ -24,27 +22,29 @@ let  getDataByYear = (year) => {
 }
 
 let appendYearlyButtons = () => {
-    let years = [...new Set(json
-        .map(state => state.Year))]
-        .filter(year => year != undefined);
-    let barchartContainer = document.getElementById("button-container")
-    for(let i = 0; i < years.length; i++) {
-        let year = years[i]
-        let btn = document.createElement('button')
-        btn.classList.add("barchart-year-btn")
-        btn.id = "btn-year-" + year
-        btn.innerHTML = year
-        btn.onclick = yearClicked
-        btn.value = year
-        console.log(btn)
-        barchartContainer.appendChild(btn)
+    if (document.getElementById("button-container").childNodes.length == 0) {
+        let years = [...new Set(json
+                .map(state => state.Year))]
+            .filter(year => year != undefined);
+        let barchartContainer = document.getElementById("button-container")
+        for (let i = 0; i < years.length; i++) {
+            let year = years[i]
+            let btn = document.createElement('button')
+            btn.classList.add("barchart-year-btn")
+            btn.id = "btn-year-" + year
+            btn.innerHTML = year
+            btn.onclick = yearClicked
+            btn.value = year
+            console.log(btn)
+            barchartContainer.appendChild(btn)
+        }
     }
 }
 
 let yearClicked = (e) => {
     let year = e.target.value
     initBarCharts(year)
-} 
+}
 
 
 let createBarChart = (data) => {
@@ -65,14 +65,13 @@ let createBarChart = (data) => {
                 "field": "opioidFactor",
                 "type": "quantitative",
                 "sort": "-x",
-                "scale": {"domain": [0, 150000]}
+                "scale": {
+                    "domain": [0, 150000]
+                }
             }
         }
     }
     return barChart;
-
-
-
 }
 
 
