@@ -56,21 +56,20 @@ let createYearBarChart = (data) => {
         "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
         "description": "A simple bar chart with embedded data.",
         "title": "Average Opioid Use By Year",
-        "width": "container",
-        "height": 800,
+        "width": 300,
+        "height": 850,
         "data": {
             "values": data
         },
         "mark": "bar",
         "encoding": {
-            "x": {
+            "y": {
                 "field": "year",
                 "type": "ordinal"
             },
-            "y": {
+            "x": {
                 "field": "opioidFactor",
                 "type": "quantitative",
-                "sort": "-x",
                 "scale": {
                     "domain": [0, 12000]
                 }
@@ -91,6 +90,8 @@ let appendYearlyButtons = () => {
             let year = years[i]
             let btn = document.createElement('button')
             btn.classList.add("barchart-year-btn")
+            btn.classList.add("btn")
+            btn.classList.add("btn-primary")
             btn.id = "btn-year-" + year
             btn.innerHTML = year
             btn.onclick = yearClicked
@@ -120,7 +121,8 @@ let createBarChart = (data) => {
         "encoding": {
             "x": {
                 "field": "state",
-                "type": "ordinal"
+                "type": "ordinal",
+                "sort": "-y"
             },
             "y": {
                 "field": "opioidFactor",
