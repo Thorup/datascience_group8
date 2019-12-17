@@ -38,8 +38,11 @@ def prepareData():
     new_df = df22.join(df11, df22.columnindex == df11.columnindex, 'inner').drop(df11.columnindex).drop(df22.columnindex)
     return new_df
 
+def save_csv(df, filename):
+    df.select("*").repartition(1).write.format("com.databricks.spark.csv").option('header', 'true').save("/"+filename)
 
-def makeKMeanshappen(df, k, seed):   
+
+def makeKMeanshappen(df, k, seed, filename):   
     kMeans = KMeans().setK(k).setSeed(seed)
     model = kMeans.fit(df.select("features"))
 
@@ -51,6 +54,9 @@ def makeKMeanshappen(df, k, seed):
     silhouette = evaluator.evaluate(predictions)
 
     print("Silhouette with squared euclidean distance = " + str(silhouette))
+    toPrint = predictions.drop(predictions.features)
+    toPrint.show()
+    save_csv(toPrint, filename)
 
     # Shows the result.
     centers = model.clusterCenters()
@@ -58,6 +64,8 @@ def makeKMeanshappen(df, k, seed):
     for center in centers:
         print(center)
     # $example off$
+
+    
 
 df = prepareData()
 df.show()
@@ -74,10 +82,10 @@ dfUnemployed = vecAssemblerUnemployed.transform(df)
 dfCrime = vecAssemblerCrime.transform(df)
 
 
-makeKMeanshappen(dfHomeless, 5, 1)
-makeKMeanshappen(dfAvgInc, 3, 1)
-makeKMeanshappen(dfUnemployed, 5, 1)
-makeKMeanshappen(dfCrime, 5, 1)
+makeKMeanshappen(dfHomeless, 5, 1, 'Homeless')
+makeKMeanshappen(dfAvgInc, 3, 1, 'AvgIncome')
+makeKMeanshappen(dfUnemployed, 5, 1, 'Unemployed')
+makeKMeanshappen(dfCrime, 5, 1, 'Crime')
 
 
 
