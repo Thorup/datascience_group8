@@ -7,7 +7,7 @@ const correlogram = require("./correlogram.js")
 barcharts.initBarCharts(2007)
 choroplethmap.initChoroMap()
 scatterMatrix.initScatterMatrix()
-countyChoro.initCountyChoro("2007", "1")
+countyChoro.initCountyChoro("2007", "Jan")
 //correlogram.initCorrelogram()
 
 

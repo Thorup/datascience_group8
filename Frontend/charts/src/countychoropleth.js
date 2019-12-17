@@ -1,5 +1,5 @@
 import vegaEmbed from 'vega-embed'
-let monthlyFips = require("../data/full_sets/fips_monthly_TRUE.json")
+let monthlyFips = require("../data/full_sets/LATEST_TRUE_FILE_2.json")
 
 
 let initCountyChoro = (year, month) => {

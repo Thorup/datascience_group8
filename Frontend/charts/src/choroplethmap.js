@@ -59,24 +59,29 @@ let createStateDataWithOpioidData = (year, stateData) => {
     stateData.features = stateData.features.filter(state => !isNaN(state.properties.density))
       return stateData
 }
-
-let printMinMaxValues = (stateData) => {
-    //GET AND PRINT MIN AND MAX VALUES OF STATE OPIOID USE
-    let min = Math.min(...stateData.features.map(state => state.properties.density))
-    let max = Math.max(...stateData.features.map(state => state.properties.density))
-    console.log("MIN: " + min)
-    console.log("MAX: " + max)
-}
-
 let getColor = (d) => {
-    return d > 50000 ? '#800026' :
-        d > 35000 ? '#BD0026' :
-        d > 20000 ? '#E31A1C' :
-        d > 15000 ? '#FC4E2A' :
-        d > 5000 ? '#FD8D3C' :
-        d > 2000 ? '#FEB24C' :
-        d > 1500 ? '#FED976' :
-        '#FFEDA0';
+    //#ff0000
+//#ff1919
+//#ff3232
+//#ff4c4c
+//#ff6666
+//#ff7f7f
+//#ff9999
+//#ffb2b2
+//#ffcccc
+//#ffe5e5
+//#ffffff
+    return d > 50000 ? '#ff0000' :
+        d > 40000 ? '#ff1919' :
+        d > 35000 ? '#ff3232' :
+        d > 30000 ? '#ff4c4c' :
+        d > 25000 ? '#ff6666' :
+        d > 15000 ? '#ff7f7f' :
+        d > 10000 ? '#ff9999' :
+        d > 7500 ? '#ffb2b2' :
+        d > 5000 ? '#ffcccc' :
+        d > 2000 ? '#ffe5e5' : 
+        '#ffffff';
 }
 
 let style = (feature) => {
