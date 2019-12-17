@@ -153,11 +153,30 @@ body::-webkit-scrollbar {
 
 /* CHARTS */
 
+svg {
+    font: 12px sans-serif;
+    text-anchor: middle;
+  }
+  
+  rect {
+    stroke: lightgray;
+    stroke-width: 1px;
+    fill: none;
+  }
+  
+  .y.axis path{
+    fill: none;
+    stroke: none;
+  }
+
+
+
 .charts-container{
     margin-top: 8%;
 }
 
 .chart-container {
+    display: inline-block;
     margin-top: 8%
 }
 

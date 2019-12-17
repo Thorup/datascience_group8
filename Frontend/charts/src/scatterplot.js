@@ -21,12 +21,12 @@ let initScatterMatrix = () => {
     var scatterElement = {
         $schema: "https://vega.github.io/schema/vega-lite/v4.json",
         repeat: {
-            row: ["Average_Income", "Homeless_Percent", "Crime_Percent", "Unemployment_Percent", "Opioid_Factor"],
-            column: ["Average_Income", "Homeless_Percent", "Crime_Percent", "Unemployment_Percent", "Opioid_Factor"]
+            row: ["Crime_Percent", "Homeless_Percent", "Opioid_Factor", "Unemployment_Percent", "Average_Income"],
+            column: ["Crime_Percent", "Homeless_Percent", "Opioid_Factor", "Unemployment_Percent", "Average_Income"],
         },
         spec: {
-            width: 150,
-            height: 150,
+            width: 175,
+            height: 175,
             data: {
               "values": opioidFactorAndPopulation
             },

@@ -1,7 +1,7 @@
 {
   "name": "heatmap",
   "version": "1.0.0",
-  "description": "A tutorial walkthrough of heatmap.js",
+  "description": "Visualization Of Opioid Use In The U.S",
   "private": true,
   "scripts": {
     "test": "No test specified",
@@ -10,7 +10,7 @@
   "author": "Mads Norby",
   "license": "ISC",
   "dependencies": {
-    "d3": "^5.14.2",
+    "d3": "^4",
     "d3-scale": "^3.2.1",
     "heatmap.js": "^2.0.5",
     "leaflet": "^1.5.1",
