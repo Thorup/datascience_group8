@@ -111,7 +111,8 @@ let createBarChart = (data) => {
 
     let barChart = {
         "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
-        "description": "A simple bar chart with embedded data.",
+        "description": "Opioid Purchases and Thefts By States",
+        "title": "Opioid Purchases and Thefts By States",
         "width": "container",
         "height": 800,
         "data": {

@@ -60,17 +60,6 @@ let createStateDataWithOpioidData = (year, stateData) => {
       return stateData
 }
 let getColor = (d) => {
-    //#ff0000
-//#ff1919
-//#ff3232
-//#ff4c4c
-//#ff6666
-//#ff7f7f
-//#ff9999
-//#ffb2b2
-//#ffcccc
-//#ffe5e5
-//#ffffff
     return d > 50000 ? '#ff0000' :
         d > 40000 ? '#ff1919' :
         d > 35000 ? '#ff3232' :

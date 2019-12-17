@@ -53,19 +53,29 @@ body::-webkit-scrollbar {
 /* HEADER END */
 
 
+h2{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 1%;
+}
 
 
-
+ul {
+    list-style: none;
+    font-weight: 900;
+}
 
 
 
 /* INTRODUCTION */
 
+.intro{
+    margin-left: 15%;
+}
+
 .intro-container {
-    text-align: center;
-    width: 100%;
+    width: 80%;
     border: 1px solid rgba(0, 0, 0, 0.2);
-    padding: 10%;
+    padding: 2%;
 }
 
 .page-intro {
