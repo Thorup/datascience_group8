@@ -8,6 +8,7 @@ from pyspark.sql.functions import monotonically_increasing_id
 from pyspark.ml.feature import VectorAssembler
 # $example off$
 
+from matplotlib import pyplot as plt
 from pyspark.sql import SparkSession
 
 # Setup spark context
@@ -39,31 +40,48 @@ def prepareData():
     return new_df
 
 
+def makeKMeanshappen(df, k, seed):   
+    kMeans = KMeans().setK(k).setSeed(seed)
+    model = kMeans.fit(df.select("features"))
+
+    predictions = model.transform(df)
+    evaluator = ClusteringEvaluator()
+
+
+    silhouette = evaluator.evaluate(predictions)
+
+    print("Silhouette with squared euclidean distance = " + str(silhouette))
+
+    # Shows the result.
+    centers = model.clusterCenters()
+    print("Cluster Centers: ")
+    for center in centers:
+        print(center)
+    # $example off$
+
 df = prepareData()
 df.show()
 df= df.na.fill(1)
 
-vecAssembler = VectorAssembler(inputCols=df.columns, outputCol="features", handleInvalid="keep")
-df2 = vecAssembler.transform(df)
+vecAssemblerHomeless = VectorAssembler(inputCols=['Homeless_Percent', 'new_opioid_factor'], outputCol="features", handleInvalid="keep")
+vecAssemblerAvgInc = VectorAssembler(inputCols=['Average_Income','new_opioid_factor'], outputCol="features", handleInvalid="keep")
+vecAssemblerUnemployed = VectorAssembler(inputCols=['Unemployment_Percent','new_opioid_factor'], outputCol="features", handleInvalid="keep")
+vecAssemblerCrime = VectorAssembler(inputCols=['Crime_Percent','new_opioid_factor'], outputCol="features", handleInvalid="keep")
+
+dfHomeless = vecAssemblerHomeless.transform(df)
+dfAvgInc = vecAssemblerAvgInc.transform(df)
+dfUnemployed = vecAssemblerUnemployed.transform(df)
+dfCrime = vecAssemblerCrime.transform(df)
 
 
-kMeans = KMeans().setK(20).setSeed(1)
-model = kMeans.fit(df2.select("features"))
+makeKMeanshappen(dfHomeless, 5, 1)
+makeKMeanshappen(dfAvgInc, 5, 1)
+makeKMeanshappen(dfUnemployed, 5, 1)
+makeKMeanshappen(dfCrime, 5, 1)
 
-predictions = model.transform(df2)
 
-evaluator = ClusteringEvaluator()
 
-silhouette = evaluator.evaluate(predictions)
 
-print("Silhouette with squared euclidean distance = " + str(silhouette))
-
-# Shows the result.
-centers = model.clusterCenters()
-print("Cluster Centers: ")
-for center in centers:
-    print(center)
-# $example off$
 
 
 sc.stop()

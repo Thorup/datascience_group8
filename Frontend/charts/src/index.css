@@ -161,6 +161,18 @@ body::-webkit-scrollbar {
     margin-top: 8%
 }
 
+#opioid-bar-chart {
+    display: inline-block;
+    width: 70vw;
+}
+
+#opioid-bar-chart-year-acc{
+    display: inline-block;
+    width: 10vw;
+}
+
+
+
 /* CHARTS END */
 
 
@@ -172,6 +184,12 @@ body::-webkit-scrollbar {
 
 
 /* BUTTONS */
+
+
+.barchart-year-btn  {
+    margin-right: 0.1%;
+    font-size: 35px !important;
+}
 
 .material-icons.md-36 {
     font-size: 36px;

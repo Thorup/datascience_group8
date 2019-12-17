@@ -5,7 +5,7 @@ const scatterMatrix = require('./scatterplot.js')
 const countyChoro = require("./countychoropleth")
 
 barcharts.initBarCharts(2007)
-heatmap.initHeatMap()
+//heatmap.initHeatMap()
 choroplethmap.initChoroMap()
 scatterMatrix.initScatterMatrix()
 countyChoro.initCountyChoro("2007", "1")
