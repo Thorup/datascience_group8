@@ -33,9 +33,8 @@ dataset = spark.read.csv(hadoopFile, inferSchema = True, header = True)
 
 def prepareData():
     df1 = dataset.select(dataset['Opioid_Factor'] / dataset['Population']).withColumnRenamed("(Opioid_factor / Population)", "new_opioid_factor")
-    df2 = dataset.select('Crime_Percent', 'Homeless_Percent', 'Average_Income', 'Unemployment_Percent')
     df11 = df1.withColumn("columnindex", monotonically_increasing_id())
-    df22 = df2.withColumn("columnindex", monotonically_increasing_id())
+    df22 = dataset.withColumn("columnindex", monotonically_increasing_id())
     new_df = df22.join(df11, df22.columnindex == df11.columnindex, 'inner').drop(df11.columnindex).drop(df22.columnindex)
     return new_df
 
@@ -45,6 +44,7 @@ def makeKMeanshappen(df, k, seed):
     model = kMeans.fit(df.select("features"))
 
     predictions = model.transform(df)
+    predictions.show()
     evaluator = ClusteringEvaluator()
 
 
@@ -75,7 +75,7 @@ dfCrime = vecAssemblerCrime.transform(df)
 
 
 makeKMeanshappen(dfHomeless, 5, 1)
-makeKMeanshappen(dfAvgInc, 5, 1)
+makeKMeanshappen(dfAvgInc, 3, 1)
 makeKMeanshappen(dfUnemployed, 5, 1)
 makeKMeanshappen(dfCrime, 5, 1)
 
