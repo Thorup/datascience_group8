@@ -4,6 +4,7 @@ const scatterMatrix = require('./scatterplot.js')
 //const countyChoro = require("./countychoropleth")
 const correlogram = require("./correlogram.js")
 const linechart = require("./linecharts.js")
+const clusteringPlots = require("./clusteringplots.js")
 
 const initYear = 2007
 const initMonth = "Jan"
@@ -13,5 +14,6 @@ choroplethmap.initChoroMap()
 scatterMatrix.initScatterMatrix()
 //countyChoro.initCountyChoro(initYear, initMonth)
 linechart.initLineCharts(initYear)
+clusteringPlots.initClusterPlots()
 
 
