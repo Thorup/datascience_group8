@@ -48,7 +48,7 @@ def incomeZScore():
     mean = df_stats[0]['mean']
     std = df_stats[0]['std']
 
-    df1 = dataset.select((dataset['Average_Income'] - mean)/std).withColumnRenamed("((Average_Income - 61175.58) / 8899.257289870002)", "z_score_AvgInc").alias("z_score_AvgInc")
+    df1 = dataset.select((dataset['Average_Income'] - mean)/std).withColumnRenamed("((Average_Income - 58348.17333333333) / 9095.510688184871)", "z_score_AvgInc").alias("z_score_AvgInc")
     df11 = df1.withColumn("columnindex", monotonically_increasing_id())
     df22 = dataset.withColumn("columnindex", monotonically_increasing_id())
     final_df = df22.join(df11, df22.columnindex == df11.columnindex, 'inner').drop(df11.columnindex).drop(df22.columnindex)
@@ -64,7 +64,7 @@ def unemploymentZScore():
     mean = df_stats[0]['mean']
     std = df_stats[0]['std']
 
-    df1 = dataset.select((dataset['Unemployment_Percent'] - mean)/std).withColumnRenamed("((Unemployment_Percent - 4.866000000000003) / 1.0684799943507408)", "z_score_Unem")
+    df1 = dataset.select((dataset['Unemployment_Percent'] - mean)/std).withColumnRenamed("((Unemployment_Percent - 7.450666666666669) / 2.512157640140963)", "z_score_Unem")
     df11 = df1.withColumn("columnindex", monotonically_increasing_id())
     df22 = df2.withColumn("columnindex", monotonically_increasing_id())
     final_df = df22.join(df11, df22.columnindex == df11.columnindex, 'inner').drop(df11.columnindex).drop(df22.columnindex)
@@ -80,7 +80,7 @@ def crimeZScore():
     mean = df_stats[0]['mean']
     std = df_stats[0]['std']
 
-    df1 = dataset.select((dataset['Crime_Percent'] - mean)/std).withColumnRenamed("((Crime_Percent - 3.4791999999999983) / 0.9475273365511445)", "z_score_Crime")
+    df1 = dataset.select((dataset['Crime_Percent'] - mean)/std).withColumnRenamed("((Crime_Percent - 3.2683999999999975) / 0.8328317973490115)", "z_score_Crime")
     df11 = df1.withColumn("columnindex", monotonically_increasing_id())
     df22 = df2.withColumn("columnindex", monotonically_increasing_id())
     final_df = df22.join(df11, df22.columnindex == df11.columnindex, 'inner').drop(df11.columnindex).drop(df22.columnindex)
@@ -98,7 +98,7 @@ def homelessZScore():
     mean = df_stats[0]['mean']
     std = df_stats[0]['std']
 
-    df1 = dataset.select((dataset['Homeless_Percent'] - mean)/std).withColumnRenamed("((Homeless_Percent - 0.17920000000000016) / 0.09544488332282862)", "z_score_Homeless")
+    df1 = dataset.select((dataset['Homeless_Percent'] - mean)/std).withColumnRenamed("((Homeless_Percent - 0.17706666666666662) / 0.09455791640084463)", "z_score_Homeless")
     df11 = df1.withColumn("columnindex", monotonically_increasing_id())
     df22 = df2.withColumn("columnindex", monotonically_increasing_id())
     final_df = df22.join(df11, df22.columnindex == df11.columnindex, 'inner').drop(df11.columnindex).drop(df22.columnindex)
@@ -117,14 +117,14 @@ def prepareData():
     mean = df_stats[0]['mean']
     std = df_stats[0]['std']
 
-    df1 = df_newOpiFac.select((df_newOpiFac['new_opioid_factor'] - mean)/std).withColumnRenamed("((new_opioid_factor - 7630.515660870387) / 12462.64262079311)", "z_score_opioid").alias("z_score_opioid")
+    df1 = df_newOpiFac.select((df_newOpiFac['new_opioid_factor'] - mean)/std).withColumnRenamed("((new_opioid_factor - 7447.090505536551) / 12252.01952320687)", "z_score_opioid").alias("z_score_opioid")
     df11 = df1.withColumn("columnindex", monotonically_increasing_id())
     df22 = df_AvgInc.withColumn("columnindex", monotonically_increasing_id())
     final_df = df22.join(df11, df22.columnindex == df11.columnindex, 'inner').drop(df11.columnindex).drop(df22.columnindex)
     return final_df
 
 def save_csv(df, filename):
-    df.select("*").repartition(1).write.format("com.databricks.spark.csv").option('header', 'true').save("/"+filename)
+    df.select("*").repartition(1).write.format("com.databricks.spark.csv").option('header', 'true').save("~/"+filename)
   
 
 
@@ -134,7 +134,7 @@ df = prepareData()
 df.show()
 df= df.na.fill(1)
 
-vecAssembler = VectorAssembler(inputCols=['Homeless_Percent', 'z_score_AvgInc', 'Crime_Percent', 'z_score_opioid'], outputCol="features", handleInvalid="keep")
+vecAssembler = VectorAssembler(inputCols=['z_score_Homeless', 'z_score_AvgInc', 'z_score_Crime', 'z_score_opioid', 'z_score_Unem'], outputCol="features", handleInvalid="keep")
 
 df_final = vecAssembler.transform(df)
 df_final.show()
@@ -153,7 +153,7 @@ silhouette = evaluator.evaluate(predictions)
 print("Silhouette with squared euclidean distance = " + str(silhouette))
 toPrint = predictions.drop(predictions.features)
 toPrint.show()
-save_csv(toPrint, filename)
+save_csv(toPrint, 'data.csv')
 
 # Shows the result.
 centers = model.clusterCenters()
