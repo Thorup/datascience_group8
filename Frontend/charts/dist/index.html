@@ -11,6 +11,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <script src="https://d3js.org/d3.v4.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Baskervville&display=swap" rel="stylesheet">
 
  
 </head>
@@ -28,11 +29,12 @@
 
         <div class="main-content">
 
-
+          <h1 class="" id="title">Analysis And Insight Into The Opioid Crisis
+            In The U.S.</h1>
             <!--INTRODUCTION TO PAGE -->
             <div class="intro">
                 <div class="intro-container row text-center">
-                    <div id="page-intro-right" class="page-intro col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div id="page-intro-right" class="page-intro col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <h2>Introduction</h2>
                         The United States is facing a national health crisis due to the rise in prescription drugs. Namely, opioids
                         such as Oxytocin and Hydrocodone, have been described as one of the major causes for this epidemic.
@@ -40,7 +42,7 @@
                         the most problematic areas are located in the US. Furthermore, the transaction data can be combined
                         with other publicly available datasets to gain insights into everything from the correlations between the
                         sales of opioids and crime rate, homelessness and much more.</div>
-                    <div class="page-intro col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="page-intro col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <h2>Datasets and Insights</h2>
                         In order to meet the project requirement of gaining additional insights of the data, it was decided to
                         collect an additional dataset, containing demographic data of the population in each state in the US.
@@ -61,48 +63,7 @@
 
             <!--ALL MAPS AND CHARTS CONTAINER-->
             <div class="row">
-<!--                <div class="map-container 
-            col-offset-1
-            col-sm-offset-1
-            col-md-offset-1
-            col-lg-offset-1
-            col-xl-offset-1
-        
-        col-10 
-        col-sm-10 
-        col-md-10 
-        col-lg-10 
-        col-xl-10" id='heat-map-container'>
-                    <div class="map-title col-12 col-md-12 col-lg-12 col-xl-12">
-                        <h1>Opioid use in counties</h1>
-                    </div>
-                    <div class="map-play-wrapper">
-                        <div class="map" id="county-choro" style="width:80vh; height: 45vh;"></div>
-                        <button class="map-button btnPlay" id="btnPlayHeatMap"><i class="material-icons md-36">
-                                play_arrow
-                            </i></button>
-                        <button class="map-button btnStop" id="btnStopHeatMap"><i class="material-icons md-36">
-                                stop
-                            </i></button>
-                    </div>
 
-
-                    <div class="row text-center">
-                        <div class="map-information col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">This is me drawing
-                            some
-                            smart conclusion on what we can see on the
-                            heatmap.
-                            The heatmap shows something
-                            about how the opioid crisis has evolved since 2007. How very interesting to see this on a
-                            heatmap, I
-                            feel much wiser. There should be some more filler
-                            text to really simulate how much text we would like to have here
-                        </div>
-                    </div>
-
-                </div>
-            </div>
--->
 
             <div class="row text-center">
                 <div class="map-container
@@ -118,7 +79,7 @@
         col-lg-10 
         col-xl-10" id="choro-container">
                     <div class="map-title col-12 col-md-12 col-lg-12 col-xl-12">
-                        <h1>Opioid use in states</h1>
+                        <h1>Opioid sales and thefts in the U.S.</h1>
                     </div>
                     <div class="map-play-wrapper">
                         <div id="yearLabel"></div>
@@ -132,31 +93,31 @@
                     </div>
 
                     <div class="row text-center">
-                        <div class="map-information col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">This is me drawing
-                            some
-                            smart conclusion on what we can see on the
-                            heatmap.
-                            The heatmap shows something
-                            about how the opioid crisis has evolved since 2007. How very interesting to see this on a
-                            heatmap, I
-                            feel much wiser. There should be some more filler
-                            text to really simulate how much text we would like to have here
+                        <div class="information">From 2007-2011 a development in the use of opioids in the U.S. can be observed. While the use 
+                          of opioids drops in some states, the collective opioid use rises. 
                         </div>
                     </div>
                 </div>
 
             </div>
-            <div class="charts-container row text-center">
-                <div class="chart-container"><div id="scatter" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"></div></div>
-                <div class="chart-container"><div id="correlogram"></div></div>
+            <div class="charts-container  row text-center">
+              <div class="information">The data used from the DEA on opioid sales can be compared to other factors that presumably has some correlated factors. 
+                A correlogram shows minor positive correlation between opioids and crime, and opioids and unemployment. Furthermore, we surprisingly can observe a minor negative correlation between opioids and average income.
+              </div>
+                <div class="scatter-container"><div id="scatter" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"></div></div>
+                <div class="correlogram-container"><div id="correlogram"></div></div>
             </div>
-            <div class="chart-container" id="opioid-bar-chart-container">
+            <div class="chart-container" id="opioid-bar-chart-container"><div class="information">South Carolina, Kansas and Georgia are consistently among the top 5 biggest users of opioids in the states. And the opioid use of places like Hawaii explodes from 2007 to 2010.</div>
                 <div id="button-container"></div><div  id="opioid-bar-chart"></div>
                 <div id="opioid-bar-chart-year-acc"></div>
             </div>
+            <div class="chart-container">
+              <div class="information">From 2007 there has been a steady progressions in the use of opioids.</div>
             <div id="opioid-line-chart"></div>
+          </div>
             <!--END OF MAPS AND CHARTS-->
-  <div class="cluster-plot-container">
+  <div class="cluster-plot-container chart-container">
+    <div id="cluster-information" class="information"></div>
             <div id="homeless-cluster"></div>
             <div id="crime-cluster"></div>
             <div id="income-cluster"></div>

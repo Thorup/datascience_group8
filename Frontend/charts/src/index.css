@@ -54,7 +54,6 @@ body::-webkit-scrollbar {
 
 
 h2{
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     padding: 1%;
 }
 
@@ -62,6 +61,17 @@ h2{
 ul {
     list-style: none;
     font-weight: 900;
+}
+
+#title {
+    text-align: center;
+    font-size: 3vw;
+    border-bottom: 0.9px solid rgba(0, 0, 0, 0.2) !important; 
+    font-family: 'Baskervville', serif;
+    font-weight: 1000;
+    width: 50%;
+    margin-left: 23%;
+ 
 }
 
 
@@ -74,7 +84,6 @@ ul {
 
 .intro-container {
     width: 80%;
-    border: 1px solid rgba(0, 0, 0, 0.2);
     padding: 2%;
 }
 
@@ -83,9 +92,7 @@ ul {
     padding: 2%;
 }
 
-#page-intro-right {
-    border-right: 1px solid rgba(0, 0, 0, 0.2);
-}
+
 
 /* INTRODUCTION END */
 
@@ -138,10 +145,11 @@ ul {
 
 
 
-.map-information {
-    text-align: center;
-    font-size: 20px;
+.information {
+    margin-left: 10%;
+    font-size: 1vw;
     padding: 2%;
+    width: 80%;
 }
 
 .map-container {
@@ -163,6 +171,14 @@ ul {
 
 /* CHARTS */
 
+#scatter-correlogram-container {
+    display: inline-block;
+}
+
+#correlogram {
+    display: inline-block;
+}
+
 svg {
     font: 12px sans-serif;
     text-anchor: middle;
@@ -179,15 +195,29 @@ svg {
     stroke: none;
   }
 
+  .cluster-plot-container {
+      margin-top: 8%;
+  }
 
 
 .charts-container{
+    display: inline-block;
     margin-top: 8%;
 }
 
-.chart-container {
+.scatter-container {
     display: inline-block;
-    margin-top: 8%
+}
+.correlogram-container {
+    display: inline-block;
+}
+.chart-container {
+    padding-bottom: 1%;
+    display: inline-block;
+    margin-top: 8%;
+    min-width: 89vw !important;
+    border: 0.1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 10px 15px rgba(0, 0, 0, 0.2);
 }
 
 #opioid-bar-chart {

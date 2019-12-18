@@ -68,8 +68,8 @@ let createLineChart = (data) => {
     "data": {values: data},
     "mark": "line",
     "encoding": {
-        "x": {"field": "date", "type": "temporal", "timeUnit": "monthyear"},
-        "y": {"field": "opioid_factor", "type": "quantitative"}
+        "x": {"field": "date", "type": "temporal", "timeUnit": "monthyear", "title": "Date"},
+        "y": {"field": "opioid_factor", "type": "quantitative", "title": "Opioid sales and thefts in mg"}
   }
 }
     return lineChart
