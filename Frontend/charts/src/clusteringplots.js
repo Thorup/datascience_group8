@@ -1,10 +1,10 @@
 import vegaEmbed from 'vega-embed'
-let homelessCluster = require("../data/full_sets/clusters/homeless_cluster.json")
-let incomeCluster = require("../data/full_sets/clusters/income_cluster.json")
-let crimeCluster = require("../data/full_sets/clusters/crime_cluster.json")
-let unempCluster = require("../data/full_sets/clusters/unemp_cluster.json")
-let width = 450;
-let height = 450;
+let homelessCluster = require("../data/full_sets/clusters/clusters.json")
+let incomeCluster = require("../data/full_sets/clusters/clusters.json")
+let crimeCluster = require("../data/full_sets/clusters/clusters.json")
+let unempCluster = require("../data/full_sets/clusters/clusters.json")
+let width = 300;
+let height = 300;
 
 
 let initClusterPlots = () => {
@@ -30,12 +30,12 @@ let initIncomePlot = (data) => {
         "encoding": {
             "x": {
                 "title": "Average Income",
-                "field": "Average_Income",
+                "field": "z_score_AvgInc",
                 "type": "quantitative"
             },
             "y": {
                 "title": "Opioid Use",
-                "field": "new_opioid_factor",
+                "field": "z_score_opioid",
                 "type": "quantitative"
             },
             "color": {
@@ -66,7 +66,7 @@ let initCrimePlot = (data) => {
             },
             "y": {
                 "title": "Opioid Use",
-                "field": "new_opioid_factor",
+                "field": "z_score_opioid",
                 "type": "quantitative"
             },
             "color": {
@@ -97,7 +97,7 @@ let initUnempCluster = (data) => {
             },
             "y": {
                 "title": "Opioid Use",
-                "field": "new_opioid_factor",
+                "field": "z_score_opioid",
                 "type": "quantitative"
             },
             "color": {
@@ -122,13 +122,13 @@ let initHomelessPlot = (data) => {
         "mark": "point",
         "encoding": {
             "x": {
-                "title": "",
+                "title": "Homelessness",
                 "field": "Homeless_Percent",
                 "type": "quantitative"
             },
             "y": {
                 "title": "Opioid Use",
-                "field": "new_opioid_factor",
+                "field": "z_score_opioid",
                 "type": "quantitative"
             },
             "color": {

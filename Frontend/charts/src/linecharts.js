@@ -64,8 +64,8 @@ let createLineChart = (data) => {
             "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
             "description": "Development in Opioid Purchases By Pharmacies from 2007 to 2012",
             "title": "Development in Opioid Purchases and Thefts",
-            "width": 1900,
-            "height": 1000,
+            "width": 1000,
+            "height": 700,
             "data": {
                 values: data
             },

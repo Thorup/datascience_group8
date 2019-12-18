@@ -25,8 +25,8 @@ let initScatterMatrix = () => {
             column: ["Crime_Percent", "Homeless_Percent", "Opioid_Factor", "Unemployment_Percent", "Average_Income"],
         },
         spec: {
-            width: 175,
-            height: 175,
+            width: 145,
+            height: 145,
             data: {
               "values": opioidFactorAndPopulation
             },

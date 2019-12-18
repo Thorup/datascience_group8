@@ -30,8 +30,8 @@ let initCorrelogram = () => {
             bottom: 25,
             left: 25
           },
-          width = 500 - margin.left - margin.right,
-          height = 500 - margin.top - margin.bottom,
+          width = 300 - margin.left - margin.right,
+          height = 300 - margin.top - margin.bottom,
           domain = d3.set(data.map(function(d) {
             return d.x
           })).values(),

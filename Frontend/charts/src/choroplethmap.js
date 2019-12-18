@@ -123,7 +123,7 @@ let playChoroMap = (layer) => {
         setYearLabel(years[index])
         setChoroMapData(layer, years[index])
         index++;
-    }, 1500)
+    }, 1000)
     initStopBtnListener(layer, playIntervalID)
     
 }

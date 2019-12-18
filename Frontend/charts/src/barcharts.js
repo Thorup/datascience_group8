@@ -9,7 +9,7 @@ const initBarCharts = function (year) {
     let yearlyBarDataAcc = getYearAccData()
     let yearlyAccBarChart = createYearBarChart(yearlyBarDataAcc)
     appendYearlyButtons()
-    vegaEmbed("#opioid-bar-chart-year-acc", yearlyAccBarChart)
+    //vegaEmbed("#opioid-bar-chart-year-acc", yearlyAccBarChart)
     vegaEmbed('#opioid-bar-chart', barChart)
 }
 
@@ -57,7 +57,7 @@ let createYearBarChart = (data) => {
         "description": "A simple bar chart with embedded data.",
         "title": "Average Opioid Sale and Thefts By Year",
         "width": 300,
-        "height": 850,
+        "height": 550,
         "data": {
             "values": data
         },
@@ -115,7 +115,7 @@ let createBarChart = (data) => {
         "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
         "description": "Opioid Purchases and Thefts By States",
         "title": "Opioid Purchases and Thefts By States",
-        "width": "container",
+        "width": 1000,
         "height": 800,
         "data": {
             "values": data

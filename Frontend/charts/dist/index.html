@@ -83,7 +83,7 @@
                     </div>
                     <div class="map-play-wrapper">
                         <div id="yearLabel"></div>
-                        <div class="map" id='choro-map' style="width:80vh; height: 45vh;"></div>
+                        <div class="map" id='choro-map' style="width:70vh; height: 50vh;"></div>
                         <button class="map-button btnPlay" id="btnPlayChoroMap"><i class="material-icons md-36">
                                 play_arrow
                             </i></button>
@@ -108,8 +108,7 @@
                 <div class="correlogram-container"><div id="correlogram"></div></div>
             </div>
             <div class="chart-container" id="opioid-bar-chart-container"><div class="information">South Carolina, Kansas and Georgia are consistently among the top 5 biggest users of opioids in the states. And the opioid use of places like Hawaii explodes from 2007 to 2010.</div>
-                <div id="button-container"></div><div  id="opioid-bar-chart"></div>
-                <div id="opioid-bar-chart-year-acc"></div>
+                <div id="button-container"></div><div  id="opioid-bar-chart"></div><!-- --><div id="opioid-bar-chart-year-acc"></div>
             </div>
             <div class="chart-container">
               <div class="information">From 2007 there has been a steady progressions in the use of opioids.</div>
@@ -241,8 +240,8 @@
           bottom: 50,
           left: 50
         },
-        width = 1200 - margin.left - margin.right,
-        height = 1200 - margin.top - margin.bottom,
+        width = 1000 - margin.left - margin.right,
+        height = 1000 - margin.top - margin.bottom,
         domain = d3.set(data.map(function(d) {
           return d.x
         })).values(),
