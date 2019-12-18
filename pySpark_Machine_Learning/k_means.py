@@ -40,30 +40,8 @@ def prepareData():
 
 def save_csv(df, filename):
     df.select("*").repartition(1).write.format("com.databricks.spark.csv").option('header', 'true').save("/"+filename)
+  
 
-
-def makeKMeanshappen(df, k, seed, filename):   
-    kMeans = KMeans().setK(k).setSeed(seed)
-    model = kMeans.fit(df.select("features"))
-
-    predictions = model.transform(df)
-    predictions.show()
-    evaluator = ClusteringEvaluator()
-
-
-    silhouette = evaluator.evaluate(predictions)
-
-    print("Silhouette with squared euclidean distance = " + str(silhouette))
-    toPrint = predictions.drop(predictions.features)
-    toPrint.show()
-    save_csv(toPrint, filename)
-
-    # Shows the result.
-    centers = model.clusterCenters()
-    print("Cluster Centers: ")
-    for center in centers:
-        print(center)
-    # $example off$
 
     
 
@@ -71,21 +49,33 @@ df = prepareData()
 df.show()
 df= df.na.fill(1)
 
-vecAssemblerHomeless = VectorAssembler(inputCols=['Homeless_Percent', 'new_opioid_factor'], outputCol="features", handleInvalid="keep")
-vecAssemblerAvgInc = VectorAssembler(inputCols=['Average_Income','new_opioid_factor'], outputCol="features", handleInvalid="keep")
-vecAssemblerUnemployed = VectorAssembler(inputCols=['Unemployment_Percent','new_opioid_factor'], outputCol="features", handleInvalid="keep")
-vecAssemblerCrime = VectorAssembler(inputCols=['Crime_Percent','new_opioid_factor'], outputCol="features", handleInvalid="keep")
+vecAssembler = VectorAssembler(inputCols=['Homeless_Percent', 'Average_Income', 'Crime_Percent', 'new_opioid_factor'], outputCol="features", handleInvalid="keep")
 
-dfHomeless = vecAssemblerHomeless.transform(df)
-dfAvgInc = vecAssemblerAvgInc.transform(df)
-dfUnemployed = vecAssemblerUnemployed.transform(df)
-dfCrime = vecAssemblerCrime.transform(df)
+df_final = vecAssembler.transform(df)
+df_final.show()
 
 
-makeKMeanshappen(dfHomeless, 5, 1, 'Homeless')
-makeKMeanshappen(dfAvgInc, 3, 1, 'AvgIncome')
-makeKMeanshappen(dfUnemployed, 5, 1, 'Unemployed')
-makeKMeanshappen(dfCrime, 5, 1, 'Crime')
+kMeans = KMeans().setK(5).setSeed(1)
+model = kMeans.fit(df_final.select("features"))
+
+predictions = model.transform(df_final)
+predictions.show()
+evaluator = ClusteringEvaluator()
+
+
+silhouette = evaluator.evaluate(predictions)
+
+print("Silhouette with squared euclidean distance = " + str(silhouette))
+toPrint = predictions.drop(predictions.features)
+toPrint.show()
+#save_csv(toPrint, filename)
+
+# Shows the result.
+centers = model.clusterCenters()
+print("Cluster Centers: ")
+for center in centers:
+    print(center)
+# $example off$
 
 
 
