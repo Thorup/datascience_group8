@@ -1,17 +1,14 @@
 import vegaEmbed from 'vega-embed'
-let homelessCluster = require("../data/full_sets/clusters/clusters.json")
-let incomeCluster = require("../data/full_sets/clusters/clusters.json")
-let crimeCluster = require("../data/full_sets/clusters/clusters.json")
-let unempCluster = require("../data/full_sets/clusters/clusters.json")
+let clusters = require("../data/full_sets/clusters/clusters_no_outliers.json")
 let width = 300;
 let height = 300;
 
 
 let initClusterPlots = () => {
-    initHomelessPlot(homelessCluster)
-    initIncomePlot(incomeCluster)
-    initCrimePlot(crimeCluster)
-    initUnempCluster(unempCluster)
+    initHomelessPlot(clusters)
+    initIncomePlot(clusters)
+    initCrimePlot(clusters)
+    initUnempCluster(clusters)
 
 }
 
@@ -61,7 +58,7 @@ let initCrimePlot = (data) => {
         "encoding": {
             "x": {
                 "title": "Crime",
-                "field": "Crime_Percent",
+                "field": "z_score_Crime",
                 "type": "quantitative"
             },
             "y": {
@@ -92,7 +89,7 @@ let initUnempCluster = (data) => {
         "encoding": {
             "x": {
                 "title": "Unemployment",
-                "field": "Unemployment_Percent",
+                "field": "z_score_Unem",
                 "type": "quantitative"
             },
             "y": {
@@ -123,7 +120,7 @@ let initHomelessPlot = (data) => {
         "encoding": {
             "x": {
                 "title": "Homelessness",
-                "field": "Homeless_Percent",
+                "field": "z_score_Homeless",
                 "type": "quantitative"
             },
             "y": {
