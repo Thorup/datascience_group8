@@ -69,7 +69,7 @@ def prepareData():
     mean = df_stats[0]['mean']
     std = df_stats[0]['std']
 
-    df1 = df_newOpiFac.select((dataset['new_opioid_factor'] - mean)/std).withColumnRenamed("(new_opioid_factor - mean / std)", "z_score_opioid").alias("z_score_opioid")
+    df1 = df_newOpiFac.select((df_newOpiFac['new_opioid_factor'] - mean)/std).withColumnRenamed("(new_opioid_factor - mean / std)", "z_score_opioid").alias("z_score_opioid")
     df11 = df1.withColumn("columnindex", monotonically_increasing_id())
     df22 = df_AvgInc.withColumn("columnindex", monotonically_increasing_id())
     final_df = df22.join(df11, df22.columnindex == df11.columnindex, 'inner').drop(df11.columnindex).drop(df22.columnindex)
