@@ -7,6 +7,7 @@ from pyspark import SparkConf, SparkContext
 from pyspark.sql.functions import monotonically_increasing_id
 from pyspark.ml.feature import VectorAssembler
 from pyspark.sql.functions import mean as _mean, stddev as _stddev, col
+from pyspark.ml.feature import MinMaxScaler
 # $example off$
 
 from matplotlib import pyplot as plt
@@ -53,12 +54,61 @@ def incomeZScore():
     final_df = df22.join(df11, df22.columnindex == df11.columnindex, 'inner').drop(df11.columnindex).drop(df22.columnindex)
     return final_df
 
+#unemployment 
+def unemploymentZScore():
+    df2 = incomeZScore()
+    df_stats = dataset.select(
+    _mean(col('Unemployment_Percent')).alias('mean'),
+    _stddev(col('Unemployment_Percent')).alias('std')).collect()
 
+    mean = df_stats[0]['mean']
+    std = df_stats[0]['std']
+
+    df1 = dataset.select((dataset['Unemployment_Percent'] - mean)/std).withColumnRenamed("((Unemployment_Percent - 4.866000000000003) / 1.0684799943507408)", "z_score_Unem")
+    df11 = df1.withColumn("columnindex", monotonically_increasing_id())
+    df22 = df2.withColumn("columnindex", monotonically_increasing_id())
+    final_df = df22.join(df11, df22.columnindex == df11.columnindex, 'inner').drop(df11.columnindex).drop(df22.columnindex)
+    final_df.show()
+    return final_df
+#Crime_percent
+def crimeZScore():
+    df2 = unemploymentZScore()
+    df_stats = dataset.select(
+    _mean(col('Crime_Percent')).alias('mean'),
+    _stddev(col('Crime_Percent')).alias('std')).collect()
+
+    mean = df_stats[0]['mean']
+    std = df_stats[0]['std']
+
+    df1 = dataset.select((dataset['Crime_Percent'] - mean)/std).withColumnRenamed("((Crime_Percent - 3.4791999999999983) / 0.9475273365511445)", "z_score_Crime")
+    df11 = df1.withColumn("columnindex", monotonically_increasing_id())
+    df22 = df2.withColumn("columnindex", monotonically_increasing_id())
+    final_df = df22.join(df11, df22.columnindex == df11.columnindex, 'inner').drop(df11.columnindex).drop(df22.columnindex)
+    final_df.show()
+    return final_df
+
+
+#Homelessness 'Crime_Percent', 'Homeless_Percent', 'Average_Income', 'Unemployment_Percent'
+def homelessZScore():
+    df2 = crimeZScore()
+    df_stats = dataset.select(
+    _mean(col('Homeless_Percent')).alias('mean'),
+    _stddev(col('Homeless_Percent')).alias('std')).collect()
+
+    mean = df_stats[0]['mean']
+    std = df_stats[0]['std']
+
+    df1 = dataset.select((dataset['Homeless_Percent'] - mean)/std).withColumnRenamed("((Homeless_Percent - 0.17920000000000016) / 0.09544488332282862)", "z_score_Homeless")
+    df11 = df1.withColumn("columnindex", monotonically_increasing_id())
+    df22 = df2.withColumn("columnindex", monotonically_increasing_id())
+    final_df = df22.join(df11, df22.columnindex == df11.columnindex, 'inner').drop(df11.columnindex).drop(df22.columnindex)
+    final_df.show()
+    return final_df
 
 def prepareData():
     df_newOpiFac = newOpioidFactor()
     df_newOpiFac.show()
-    df_AvgInc = incomeZScore()
+    df_AvgInc = homelessZScore()
 
     df_stats = df_newOpiFac.select(
     _mean(col('new_opioid_factor')).alias('mean'),
