@@ -48,6 +48,7 @@ let getYearAccData = () => {
             opioidFactor: sum
         })
     })
+    console.log(yearOpioidMapReduced)
     return yearOpioidMapReduced
 }
 
@@ -56,19 +57,19 @@ let createYearBarChart = (data) => {
         "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
         "description": "A simple bar chart with embedded data.",
         "title": "Average Opioid Sale and Thefts By Year",
-        "width": 300,
+        "width": 800,
         "height": 550,
         "data": {
             "values": data
         },
         "mark": "bar",
         "encoding": {
-            "y": {
+            "x": {
                 "field": "year",
                 "type": "ordinal",
                 "title": "Year"
             },
-            "x": {
+            "y": {
                 "field": "opioidFactor",
                 "type": "quantitative",
                 "title": "Opioid sales and thefts in mg",

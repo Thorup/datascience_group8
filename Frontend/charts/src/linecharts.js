@@ -1,12 +1,9 @@
 import vegaEmbed from 'vega-embed'
-import {
-    reduce
-} from 'vega-lite/build/src/encoding'
 let countyMonthlyOpioidUse = require("../data/full_sets/LATEST_TRUE_FILE_2.json")
 
 
 
-let initLineCharts = (year) => {
+let initLineCharts = () => {
     let data = getLineData()
     let lineChart = createLineChart(data)
     vegaEmbed("#opioid-line-chart", lineChart)

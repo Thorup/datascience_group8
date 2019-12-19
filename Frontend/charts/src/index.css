@@ -199,8 +199,9 @@ ul {
 /* CHARTS */
 
 #opioid-bar-chart {
-    margin-left: 11% !important
+    margin-left: 11% !important;
 }
+
 
 #scatter-correlogram-container {
     display: inline-block;

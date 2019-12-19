@@ -87,7 +87,7 @@ let style = (feature) => {
 let initPlayButtonListener = (layer) => {
    let playBtn = document.getElementById("btnPlayChoroMap")
    playBtn.addEventListener('click', function() {
-       playChoroMap(layer)
+       playChoroMap(layer, 3)
    })
 }
 
@@ -102,12 +102,13 @@ let initStopBtnListener = (layer, playIntervalID) => {
         clearInterval(playIntervalID)
         stopBtn.style.display = 'none';
         startBtn.style.display = 'block'
-
     })
 }
 
 
-let playChoroMap = (layer) => {
+let playChoroMap = (layer, seconds) => {
+    let mill = seconds * 1000;
+
     let years = [...new Set(stateYearlyOpioidUse
         .map(state => state.Year))]
         .filter(year => year != undefined);
@@ -123,7 +124,7 @@ let playChoroMap = (layer) => {
         setYearLabel(years[index])
         setChoroMapData(layer, years[index])
         index++;
-    }, 1000)
+    }, mill)
     initStopBtnListener(layer, playIntervalID)
     
 }
