@@ -1785,23 +1785,6 @@
     "prediction": 0
   },
   {
-    "State": "Vermont",
-    "State_Abr": "VT",
-    "Opioid_Factor": 99200000000,
-    "Crime_Percent": 2.54,
-    "Homeless_Percent": 0.19,
-    "Average_Income": 61381,
-    "Unemployment_Percent": 7.1,
-    "Population": 624817,
-    "Year": 2009,
-    "z_score_AvgInc": 0.33344215301800806,
-    "z_score_Unem": -0.13958784316058806,
-    "z_score_Crime": -0.8746063758835445,
-    "z_score_Homeless": 0.1367768435009409,
-    "z_score_opioid": 12.350567678674397,
-    "prediction": 1
-  },
-  {
     "State": "Illinois",
     "State_Abr": "IL",
     "Opioid_Factor": 66300000000,
