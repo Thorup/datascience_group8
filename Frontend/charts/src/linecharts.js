@@ -24,7 +24,7 @@ let getLineData = () => {
         .filter(county => county.opioid_factor < 2500000)
         .map(county => {
             return {
-                date: county.month + " " + county.year,
+                date: county.month + (county.year-2007)*12,
                 opioid_factor: county.opioid_factor,
                 fips: county.fips
             }
