@@ -70,6 +70,12 @@ let createLineChart = (data) => {
                 values: data
             },
             "mark": "line",
+            "transform": [
+                {
+                  "regression": "date",
+                  "on": "opioid_factor"
+                }
+              ],
             "encoding": {
                 "x": {
                     "field": "date",
