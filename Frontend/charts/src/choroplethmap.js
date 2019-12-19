@@ -145,7 +145,7 @@ let initChoroMap = () => {
     let baseLayer = getBaseLayer();
     let map = new L.Map('choro-map', {
         center: new L.LatLng(39.099724, -94.578331),
-        zoom: 5,
+        zoom: 4,
         layers: [baseLayer],
         maxBounds: maxBounds,
         dragging: enableInteraction,
