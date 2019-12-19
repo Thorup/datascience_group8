@@ -24,7 +24,7 @@ let getLineData = () => {
         .filter(county => county.opioid_factor < 2500000)
         .map(county => {
             return {
-                date: county.month + (county.year-2007)*12,
+                date: county.month + " " + county.year,
                 opioid_factor: county.opioid_factor,
                 fips: county.fips
             }
@@ -70,12 +70,6 @@ let createLineChart = (data) => {
                 values: data
             },
             "mark": "line",
-            "transform": [
-                {
-                  "regression": "date",
-                  "on": "opioid_factor"
-                }
-              ],
             "encoding": {
                 "x": {
                     "field": "date",
