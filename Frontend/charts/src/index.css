@@ -60,13 +60,15 @@ body::-webkit-scrollbar {
     text-align: center;
     top: 0px;
     font-weight: bolder;
-    font-size: 60px;
     z-index: 1000 !important;
 }
 
+#header-text{
+    font-size: 5rem;
+}
 #github-link-logo {
-    width: 75px;
-    height: 75px;
+    width: 3%;
+    height: 5%;
     position: fixed;
     right: 20px;
     top: 20px;
