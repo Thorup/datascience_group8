@@ -87,7 +87,7 @@ let style = (feature) => {
 let initPlayButtonListener = (layer) => {
    let playBtn = document.getElementById("btnPlayChoroMap")
    playBtn.addEventListener('click', function() {
-       playChoroMap(layer, 2)
+       playChoroMap(layer, 3)
    })
 }
 
