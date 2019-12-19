@@ -1,5 +1,5 @@
 import vegaEmbed from 'vega-embed'
-let clusters = require("../data/full_sets/clusters/clusters_no_outliers.json")
+let clusters = require("../data/full_sets/clusters/clusters_10k.json")
 let width = 300;
 let height = 300;
 
