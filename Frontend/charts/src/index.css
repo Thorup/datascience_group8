@@ -64,11 +64,11 @@ body::-webkit-scrollbar {
 }
 
 #header-text{
-    font-size: 5rem;
+    font-size: 0.9vw;
 }
 #github-link-logo {
-    width: 3%;
-    height: 5%;
+    width: 2vw;
+    height: 3.5vh;
     position: fixed;
     right: 20px;
     top: 20px;
