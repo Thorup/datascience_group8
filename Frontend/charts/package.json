@@ -18,7 +18,7 @@
     "leaflet-heatmap": "^1.0.0",
     "material-design-icons": "^3.0.1",
     "material-icons": "^0.3.1",
-    "vega": "^5.8.1",
+    "vega": "^5.17.3",
     "vega-embed": "^6.1.0",
     "vega-lite": "^4.0.0-beta.11"
   },
